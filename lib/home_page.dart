@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, non_constant_identifier_names, use_build_context_synchronously
+// ignore_for_file: sized_box_for_whitespace, use_full_hex_values_for_flutter_colors, non_constant_identifier_names, use_build_context_synchronously, avoid_print
 
 // import 'dart:ffi';
 import 'dart:convert';
@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                           width: 2.0, // Adjust the border width as needed
                         ),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.question_mark_rounded,
                         color: Colors.white,
                         size: 25,
@@ -192,7 +192,7 @@ class _HomeSkipState extends State<HomeSkip> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OriginalPage()),
+                MaterialPageRoute(builder: (context) => const OriginalPage()),
               );
             },
             child: Container(
@@ -301,7 +301,7 @@ class _HomeSkipState extends State<HomeSkip> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AudioReady(
+                          builder: (context) => const AudioReady(
                                 listOfAudios: [],
                               )));
                 }

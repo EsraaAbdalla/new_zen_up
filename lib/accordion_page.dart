@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, prefer_const_declarations, use_full_hex_values_for_flutter_colors, sized_box_for_whitespace, non_constant_identifier_names, avoid_print, unnecessary_cast
 
 import 'dart:convert';
 import 'package:accordion/accordion.dart';
@@ -43,17 +43,17 @@ List<Map<String, dynamic>> updateListWithCategory(
 Color getCategoryBackgroundColor(String category) {
   // Logic to determine the background color based on the category
   if (category == 'awareness') {
-    return Color(0XFFFFF3B3B);
+    return const Color(0XFFFFF3B3B);
   } else if (category == 'breathing') {
-    return Color(0XFFF0DCA91);
+    return const Color(0XFFF0DCA91);
   } else if (category == 'compassion') {
-    return Color(0XFFFFFD541);
+    return const Color(0XFFFFFD541);
   } else if (category == 'forgiveness') {
-    return Color(0XFFFFB6F20);
+    return const Color(0XFFFFB6F20);
   } else if (category == 'gratitude') {
-    return Color(0XFFF441DFC);
+    return const Color(0XFFF441DFC);
   } else {
-    return Color(0XFFF9D86FF);
+    return const Color(0XFFF9D86FF);
   }
 }
 
@@ -135,7 +135,7 @@ class _AccordionPageState extends State<AccordionPage> {
                 children: [
                   for (final category in AccordionPage.categoryNames)
                     AccordionSection(
-                      rightIcon: Icon(
+                      rightIcon: const Icon(
                         Icons.keyboard_arrow_down_outlined,
                         size: 30,
                         color: Colors.white,

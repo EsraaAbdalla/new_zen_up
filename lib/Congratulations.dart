@@ -55,7 +55,7 @@ class Congratulations extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OriginalPage()),
+                  MaterialPageRoute(builder: (context) => const OriginalPage()),
                 );
               },
             ),

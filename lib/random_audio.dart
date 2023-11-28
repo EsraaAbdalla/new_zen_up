@@ -1,10 +1,10 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_declarations, avoid_print, prefer_final_fields, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/audio_ready.dart';
-import 'package:new_zen_up/nav_bar.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:new_zen_up/original_page.dart';
 
@@ -220,7 +220,7 @@ class _RandomAudioState extends State<RandomAudio> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => OriginalPage(),
+                        builder: (context) => const OriginalPage(),
                       ),
                     );
                   },

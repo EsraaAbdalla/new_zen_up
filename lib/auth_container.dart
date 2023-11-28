@@ -1,9 +1,10 @@
-import 'package:fluro/fluro.dart';
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/Splach/splach_view.dart';
-import 'package:new_zen_up/app_router.dart';
+
 import 'package:new_zen_up/original_page.dart';
-import 'package:new_zen_up/shareed_preferences.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthContainer extends StatefulWidget {
@@ -32,9 +33,9 @@ class _AuthContainerState extends State<AuthContainer> {
     } else {
       // print();
       if (token == null) {
-        return SplashView();
+        return const SplashView();
       } else {
-        return OriginalPage();
+        return const OriginalPage();
       }
     }
   }

@@ -1,4 +1,4 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, file_names
 
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/constant.dart';
@@ -13,7 +13,7 @@ class TransactionIsSuccessfully extends StatelessWidget {
       backgroundColor: kPrimaryColor,
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(30)),

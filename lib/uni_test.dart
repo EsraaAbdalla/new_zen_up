@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unused_field, deprecated_member_use, avoid_print, use_full_hex_values_for_flutter_colors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_zen_up/shareed_preferences.dart';
@@ -5,6 +7,8 @@ import 'package:uni_links/uni_links.dart';
 import 'Cubit/create_new_pass_state.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -114,7 +118,7 @@ class CreateNewPasswordPage extends StatelessWidget {
   final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
   final TextEditingController newPasswordController = TextEditingController();
 
-  CreateNewPasswordPage({required this.resetLink});
+  CreateNewPasswordPage({super.key, required this.resetLink});
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +193,7 @@ class CreateNewPasswordPage extends StatelessWidget {
                         },
                         controller: newPasswordController,
                         obscureText: !isVisible,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             // Your existing decoration code
                             ),
                       );
@@ -218,7 +222,7 @@ class CreateNewPasswordPage extends StatelessWidget {
                         },
                         controller: newPasswordController,
                         obscureText: !isVisible,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             // Your existing decoration code
                             ),
                       );

@@ -1,4 +1,4 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/constant.dart';
@@ -8,6 +8,8 @@ import 'package:new_zen_up/profile_page.dart';
 import 'package:new_zen_up/random_audio.dart';
 
 class NavBar extends StatefulWidget {
+  const NavBar({super.key});
+
   @override
   _NavBarState createState() => _NavBarState();
 }
@@ -293,12 +295,14 @@ class _NavBarState extends State<NavBar> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }
 
 class CustomNavBar extends StatelessWidget {
+  const CustomNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

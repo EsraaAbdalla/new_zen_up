@@ -1,4 +1,4 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, non_constant_identifier_names, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/home_page.dart';

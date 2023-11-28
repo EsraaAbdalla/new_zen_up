@@ -1,7 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
-import 'package:new_zen_up/nav_bar.dart';
+
 import 'package:new_zen_up/original_page.dart';
 
 class SuccessRegister extends StatelessWidget {
@@ -65,7 +65,8 @@ class SuccessRegister extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => OriginalPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const OriginalPage()),
                   );
                 },
               ),

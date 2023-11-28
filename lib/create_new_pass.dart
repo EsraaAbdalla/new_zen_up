@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_build_context_synchronously, use_full_hex_values_for_flutter_colors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

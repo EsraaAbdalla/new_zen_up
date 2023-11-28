@@ -128,7 +128,6 @@ import 'package:new_zen_up/Cubit/signup_state.dart';
 import 'package:http/http.dart' as http;
 import 'package:new_zen_up/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:new_zen_up/icon.dart';
 
 void main() {
   runApp(const MyApp());

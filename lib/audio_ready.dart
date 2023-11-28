@@ -1,4 +1,4 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_typing_uninitialized_variables, prefer_const_declarations, avoid_print, unnecessary_brace_in_string_interps, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/Cubit/login_state.dart';
@@ -43,7 +43,7 @@ Future<String?> mergeAudios(List<dynamic> audioIds) async {
 }
 
 class AudioReady extends StatefulWidget {
-  AudioReady({Key? key, required this.listOfAudios}) : super(key: key);
+  const AudioReady({Key? key, required this.listOfAudios}) : super(key: key);
   final List<Map<String, dynamic>> listOfAudios;
   @override
   State<AudioReady> createState() => _AudioReadyState();

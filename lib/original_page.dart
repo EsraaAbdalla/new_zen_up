@@ -162,15 +162,19 @@
 //   }
 // }
 
+// ignore_for_file: library_private_types_in_public_api, use_full_hex_values_for_flutter_colors
+
 import 'package:flutter/material.dart';
-import 'package:new_zen_up/app_router.dart';
+
 import 'package:new_zen_up/constant.dart';
 import 'package:new_zen_up/home_page.dart';
-import 'package:new_zen_up/original_page.dart';
+
 import 'package:new_zen_up/profile_page.dart';
 import 'package:new_zen_up/random_audio.dart';
 
 class OriginalPage extends StatefulWidget {
+  const OriginalPage({super.key});
+
   @override
   _OriginalPageState createState() => _OriginalPageState();
 }
@@ -225,7 +229,7 @@ class _OriginalPageState extends State<OriginalPage> {
                                       MediaQuery.of(context).size.height * 0.07,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Awareness',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -256,7 +260,7 @@ class _OriginalPageState extends State<OriginalPage> {
                                       MediaQuery.of(context).size.height * 0.07,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Breathing',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -287,7 +291,7 @@ class _OriginalPageState extends State<OriginalPage> {
                                       MediaQuery.of(context).size.height * 0.07,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 'Compassion',
                                 style: TextStyle(
                                     color: Colors.white,
@@ -325,7 +329,7 @@ class _OriginalPageState extends State<OriginalPage> {
                                         0.07,
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   'Forgiveness',
                                   style: TextStyle(
                                       color: Colors.white,
@@ -357,7 +361,7 @@ class _OriginalPageState extends State<OriginalPage> {
                                         0.07,
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   'Gratitude',
                                   style: TextStyle(
                                       color: Colors.white,
@@ -389,7 +393,7 @@ class _OriginalPageState extends State<OriginalPage> {
                                         0.07,
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                   'Happiness',
                                   style: TextStyle(
                                       color: Colors.white,
@@ -456,18 +460,20 @@ class _OriginalPageState extends State<OriginalPage> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(),
     );
   }
 }
 
 class CustomNavBar extends StatelessWidget {
+  const CustomNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 60.0,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(50.0),
           topRight: Radius.circular(50.0),
         ),
@@ -476,7 +482,7 @@ class CustomNavBar extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Transform.translate(
-          offset: Offset(0.0, -30.0),
+          offset: const Offset(0.0, -30.0),
           child: GestureDetector(
             onTap: () {
               Navigator.push(
@@ -493,13 +499,13 @@ class CustomNavBar extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: Colors.white,
                 border: Border.all(
-                  color: Color(0XFFF8460F4),
+                  color: const Color(0XFFF8460F4),
                   width: 2.0,
                 ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(
                     Icons.person_2_outlined,
                     color: Color(0XFFF8460F4),

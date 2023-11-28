@@ -122,7 +122,7 @@ class _RecordNumState extends State<RecordNum> {
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.question_mark_rounded,
                 color: Colors.white,
                 size: 20,

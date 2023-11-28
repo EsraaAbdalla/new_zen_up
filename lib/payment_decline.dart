@@ -28,7 +28,7 @@ class PaymentDecline extends StatelessWidget {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.cancel,
                         color: Color(0XFFFFF0000),
                       ),
@@ -58,7 +58,7 @@ class PaymentDecline extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                             35), // Set the desired circular border radius
                       ),
-                      backgroundColor: Color(0XFFFFF0000),
+                      backgroundColor: const Color(0XFFFFF0000),
                     ),
                     child: Center(
                       child: Row(

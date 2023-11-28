@@ -53,7 +53,7 @@
 //   }
 // }
 //##################################
-// ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api, avoid_print, must_be_immutable, prefer_const_declarations, use_full_hex_values_for_flutter_colors
+// ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api, avoid_print, must_be_immutable, prefer_const_declarations, use_full_hex_values_for_flutter_colors, unused_local_variable, camel_case_types
 
 // import 'package:audioplayers/audioplayers.dart';
 // import 'package:flutter/material.dart';
