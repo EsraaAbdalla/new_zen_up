@@ -1,265 +1,356 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: library_private_types_in_public_api
 
+import 'dart:convert';
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
-// void main() async {
-//   runApp(const AccordionApp());
-// }
+import 'audio_ready.dart';
 
-// class AccordionApp extends StatelessWidget {
-//   const AccordionApp({Key? key}) : super(key: key);
+List<Map<String, dynamic>> updatedList = [];
 
-//   // This widget is the root of your application.
-//   @override
-//   // Widget build(BuildContext context) {
-//   //   return MaterialApp(
-//   //     title: 'Flutter Demo',
-//   //     theme: ThemeData(
-//   //       primarySwatch: Colors.blue,
-//   //     ),
-//   //     home: const AccordionPage(),
-//   //   );
-//   // }
-// }
+class YourObject {
+  String categoryName;
+  String id;
+  String AudioName;
+
+  YourObject(
+      {required this.categoryName, required this.id, required this.AudioName});
+
+  Map<String, dynamic> toJson() {
+    return {'categoryName': categoryName, '_id': id, 'name': AudioName};
+  }
+}
+
+List<Map<String, dynamic>> updateListWithCategory(
+    YourObject newObject, List<Map<String, dynamic>> selected) {
+  int index = selected.indexWhere(
+      (element) => element['categoryName'] == newObject.categoryName);
+
+  if (index != -1) {
+    // Replace the existing object with the new one
+    selected[index] =
+        newObject.toJson(); // Assuming YourObject has a toJson method
+  } else {
+    // If the category name doesn't exist, add the new object
+    selected.add(newObject.toJson());
+  }
+
+  return selected;
+}
+
+Color getCategoryBackgroundColor(String category) {
+  // Logic to determine the background color based on the category
+  if (category == 'awareness') {
+    return Color(0XFFFFF3B3B);
+  } else if (category == 'breathing') {
+    return Color(0XFFF0DCA91);
+  } else if (category == 'compassion') {
+    return Color(0XFFFFFD541);
+  } else if (category == 'forgiveness') {
+    return Color(0XFFFFB6F20);
+  } else if (category == 'gratitude') {
+    return Color(0XFFF441DFC);
+  } else {
+    return Color(0XFFF9D86FF);
+  }
+}
+
+Map<String, dynamic> audios = {};
+Future<Map<String, dynamic>> fetchAudiosByCategory(String categoryName) async {
+  final String baseUrl = 'https://meditation-0gig.onrender.com';
+  final response =
+      await http.get(Uri.parse('$baseUrl/getAudiosByCat/$categoryName'));
+
+  if (response.statusCode == 200) {
+    // print(categoryName);
+    // print(response.body); // Print the entire response body
+    return json.decode(response.body);
+  } else {
+    throw Exception('Failed to load data from the API');
+  }
+}
 
 /// Main example page
-class AccordionPage extends StatelessWidget //__
+class AccordionPage extends StatefulWidget //__
 {
   static const headerStyle = TextStyle(
       color: Color(0xffffffff), fontSize: 18, fontWeight: FontWeight.bold);
   static const contentStyleHeader = TextStyle(
       color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w700);
   static const contentStyle = TextStyle(
-      color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.normal);
-  static const loremIpsum =
-      '''Lorem ipsum is typically a corrupted version of 'De finibus bonorum et malorum', a 1st century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.''';
-  static const slogan =
-      'Do not forget to play around with all sorts of colors, backgrounds, borders, etc.';
-
-  const AccordionPage({super.key});
+      color: Color(0xff999999),
+      fontSize: 14,
+      fontWeight: FontWeight.normal,
+      overflow: TextOverflow.ellipsis);
+  static const List<String> categoryNames = [
+    'awareness',
+    'breathing',
+    'compassion',
+    'forgiveness',
+    'gratitude',
+    'happiness',
+  ];
+  final List<Map<String, dynamic>> selected;
+  const AccordionPage({super.key, required this.selected});
 
   @override
+  State<AccordionPage> createState() => _AccordionPageState();
+}
+
+class _AccordionPageState extends State<AccordionPage> {
+  void updateSelected(String categoryName, int? selectedIndex) {
+    setState(() {
+      if (selectedIndex != null) {
+        // Add the selected item to the list
+        widget.selected.add(audios[categoryName][selectedIndex]);
+      } else {
+        // Remove the unselected item from the list
+        widget.selected
+            .removeWhere((item) => item['categoryName'] == categoryName);
+      }
+    });
+  }
+
+  bool showPriceColumn = true;
+  @override
   build(context) => Scaffold(
-        backgroundColor: Colors.blueGrey[100],
-        appBar: AppBar(
-          title: const Text('Accordion'),
-        ),
-        body: Accordion(
-          headerBorderColor: Colors.blueGrey,
-          headerBorderColorOpened: Colors.transparent,
-          // headerBorderWidth: 1,
-          //   headerBackgroundColorOpened: Color(0XFFFFF3B3B),
-          contentBackgroundColor: Colors.white,
-          //55p  contentBorderColor: Color(0XFFFFF3B3B),
-          contentBorderWidth: 3,
-          contentHorizontalPadding: 20,
-          scaleWhenAnimating: true,
-          openAndCloseAnimation: true,
-          headerPadding:
-              const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-          sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
-          sectionClosingHapticFeedback: SectionHapticFeedback.light,
-          children: [
-            AccordionSection(
-              headerBackgroundColorOpened: const Color(0XFFFFF3B3B),
-              contentBorderColor: const Color(0xfffff3b3b),
-              isOpen: false,
-              header: Container(
-                  color: Colors.amber,
-                  child: const Text('DataTable', style: headerStyle)),
-              content: const MyDataTable(),
-            ),
-            AccordionSection(
-              headerBackgroundColorOpened: const Color(0XFFF0DCA91),
-              contentBorderColor: const Color(0XFFF0DCA91),
-              isOpen: false,
-              header: const Text('DataTable', style: headerStyle),
-              content: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/Group 3160.png'),
-                    fit: BoxFit.cover,
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Accordion(
+                paddingListHorizontal: 15,
+                headerBorderColorOpened: Colors.transparent,
+                contentBackgroundColor: Colors.white,
+                contentBorderWidth: 3,
+                contentHorizontalPadding: 20,
+                scaleWhenAnimating: true,
+                openAndCloseAnimation: true,
+                headerPadding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
+                sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
+                sectionClosingHapticFeedback: SectionHapticFeedback.light,
+                children: [
+                  for (final category in AccordionPage.categoryNames)
+                    AccordionSection(
+                      rightIcon: Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                      headerBackgroundColor:
+                          getCategoryBackgroundColor(category),
+                      contentBorderColor: getCategoryBackgroundColor(category),
+                      headerBackgroundColorOpened:
+                          getCategoryBackgroundColor(category),
+                      headerBorderColor: getCategoryBackgroundColor(category),
+                      onOpenSection: () async {
+                        audios = await fetchAudiosByCategory(category);
+                      },
+                      isOpen: false,
+                      header: Container(
+                        height: 70,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 10),
+                              child: Text(
+                                category
+                                    .toUpperCase(), // Assuming you have a capitalize method
+                                style: AccordionPage.headerStyle
+                                    .copyWith(fontSize: 20),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                "5 categories",
+                                style: AccordionPage.contentStyle
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      content: MyDataTable(
+                        dataFuture: fetchAudiosByCategory(category),
+                        selected: widget.selected,
+                      ),
+                    ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Ink(
+                  //  width: ,1
+                  height: 70,
+
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(99),
+                    color: Colors.white,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0, 3),
+                        blurRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AudioReady(
+                                  listOfAudios: updatedList,
+                                )),
+                      );
+                    },
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Done',
+                            style: TextStyle(
+                                color: Colors.purpleAccent,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.purpleAccent,
+                            size: 17,
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                child: const MyDataTable(),
               ),
-            ),
-            AccordionSection(
-              headerBackgroundColorOpened: const Color(0XFFFFFD541),
-              contentBorderColor: const Color(0XFFFFFD541),
-              isOpen: false,
-              header: const Text('DataTable', style: headerStyle),
-              content: const MyDataTable(),
-            ),
-            AccordionSection(
-              headerBackgroundColorOpened: const Color(0XFFFFB6F20),
-              contentBorderColor: const Color(0XFFFFB6F20),
-              isOpen: false,
-              header: const Text('DataTable', style: headerStyle),
-              content: const MyDataTable(),
-            ),
-            AccordionSection(
-              headerBackgroundColorOpened: const Color(0XFFF441DFC),
-              contentBorderColor: const Color(0XFFF441DFC),
-              isOpen: false,
-              header: const Text('DataTable', style: headerStyle),
-              content: const MyDataTable(),
-            ),
-            AccordionSection(
-              headerBackgroundColorOpened: const Color(0XFFF9D86FF),
-              contentBorderColor: const Color(0XFFF9D86FF),
-              isOpen: false,
-              header: const Text('DataTable', style: headerStyle),
-              content: const MyDataTable(),
-            ),
-          ],
+            ],
+          ),
         ),
       );
 }
 
-class MyInputForm extends StatelessWidget //__
-{
-  const MyInputForm({super.key});
+class MyDataTable extends StatefulWidget {
+  final Future<Map<String, dynamic>> dataFuture;
+  final List<Map<String, dynamic>> selected;
+
+  const MyDataTable(
+      {Key? key, required this.dataFuture, required this.selected})
+      : super(key: key);
 
   @override
-  Widget build(context) //__
-  {
-    return Column(
-      children: [
-        TextFormField(
-          decoration: InputDecoration(
-            label: const Text('Some text goes here ...'),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-        ).marginOnly(bottom: 10),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text('Submit'),
-        )
-      ],
-    );
-  }
+  _MyDataTableState createState() => _MyDataTableState();
 }
 
-class MyDataTable extends StatelessWidget //__
-{
-  const MyDataTable({super.key});
+class _MyDataTableState extends State<MyDataTable> {
+  Map<String, int?> selectedRows = {};
+  RegExp pattern = RegExp(r'[._-]');
 
-  @override
-  Widget build(context) //__
-  {
-    return DataTable(
-      sortAscending: true,
-      sortColumnIndex: 1,
-      showBottomBorder: false,
-      columns: const [
-        DataColumn(
-            label: Text('ID', style: AccordionPage.contentStyleHeader),
-            numeric: true),
-        DataColumn(
-            label:
-                Text('Description', style: AccordionPage.contentStyleHeader)),
-        DataColumn(
-            label: Text('Price', style: AccordionPage.contentStyleHeader),
-            numeric: true),
-      ],
-      rows: const [
-        DataRow(
-          cells: [
-            DataCell(Text('1',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
-            DataCell(Text('Fancy Product', style: AccordionPage.contentStyle)),
-            DataCell(Text(r'$ 199.99',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
-          ],
-        ),
-        DataRow(
-          cells: [
-            DataCell(Text('2',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
-            DataCell(
-                Text('Another Product', style: AccordionPage.contentStyle)),
-            DataCell(Text(r'$ 79.00',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
-          ],
-        ),
-        DataRow(
-          cells: [
-            DataCell(Text('3',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
-            DataCell(
-                Text('Really Cool Stuff', style: AccordionPage.contentStyle)),
-            DataCell(Text(r'$ 9.99',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
-          ],
-        ),
-        DataRow(
-          cells: [
-            DataCell(Text('4',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right)),
-            DataCell(Text('Last Product goes here',
-                style: AccordionPage.contentStyle)),
-            DataCell(Text(r'$ 19.99',
-                style: AccordionPage.contentStyle, textAlign: TextAlign.right))
-          ],
-        ),
-      ],
-    );
+  double responsiveTextSize(double percentage, BuildContext context) {
+    return MediaQuery.of(context).size.width * (percentage / 100);
   }
-}
-
-class MyNestedAccordion extends StatelessWidget //__
-{
-  const MyNestedAccordion({super.key});
 
   @override
-  Widget build(context) //__
-  {
-    return Accordion(
-      paddingListTop: 0,
-      paddingListBottom: 0,
-      maxOpenSections: 1,
-      // headerBackgroundColorOpened: Colors.black54,
-      headerPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-      children: [
-        AccordionSection(
-          isOpen: true,
-          leftIcon: const Icon(Icons.insights_rounded, color: Colors.white),
-          //  headerBackgroundColor: Colors.black38,
-          headerBackgroundColor: const Color(0XFFFFF3B3B),
-          // headerBackgroundColorOpened: Colors.black54,
-          header:
-              const Text('Nested Section #1', style: AccordionPage.headerStyle),
-          content: const Text(AccordionPage.loremIpsum,
-              style: AccordionPage.contentStyle),
-          contentHorizontalPadding: 20,
-          contentBorderColor: Colors.black54,
-        ),
-        AccordionSection(
-          isOpen: true,
-          leftIcon: const Icon(Icons.compare_rounded, color: Colors.white),
-          header:
-              const Text('Nested Section #2', style: AccordionPage.headerStyle),
-          headerBackgroundColor: Colors.black38,
-          headerBackgroundColorOpened: Colors.black54,
-          contentBorderColor: Colors.black54,
-          content: Row(
-            children: const [
-              Icon(Icons.compare_rounded,
-                  size: 120, color: Colors.orangeAccent),
-              Flexible(
-                  flex: 1,
-                  child: Text(AccordionPage.loremIpsum,
-                      style: AccordionPage.contentStyle)),
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: widget.dataFuture,
+      builder: (context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          final data = snapshot.data?['Audios'];
+          if (data == null || data.isEmpty) {
+            return const Center(
+              child: Text('No data available'),
+            );
+          }
+          return DataTable(
+            sortAscending: true,
+            sortColumnIndex: 1,
+            showBottomBorder: false,
+            columns: const [
+              DataColumn(
+                label: Text(
+                  'Name',
+                  style: AccordionPage.contentStyleHeader,
+                ),
+                numeric: false,
+              ),
+              DataColumn(
+                label: Text(
+                  'Select',
+                  style: AccordionPage.contentStyleHeader,
+                ),
+                numeric: true,
+              ),
             ],
-          ),
-        ),
-      ],
+            rows: List<DataRow>.generate(
+              data.length,
+              (index) {
+                final item = data[index];
+                final ID = item['_id'];
+                final categoryName = item['categoryName'];
+                final audioName = item['name'].toString();
+                final isSelected = widget.selected.any((selectedItem) =>
+                    audioName.toLowerCase() ==
+                    selectedItem['name'].toString().toLowerCase());
+
+                return DataRow(
+                  selected: selectedRows[categoryName] == index,
+                  cells: [
+                    DataCell(
+                      Container(
+                        constraints: BoxConstraints(
+                            maxWidth: responsiveTextSize(200, context)),
+                        child: Text(
+                          audioName.replaceAll(pattern, ' '),
+                          style: AccordionPage.contentStyle,
+                          maxLines: 3,
+                          softWrap: true,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
+                    DataCell(
+                      Radio(
+                        value: isSelected ? null : index,
+                        groupValue: selectedRows[categoryName],
+                        onChanged: (value) {
+                          setState(() {
+                            YourObject newCategoryObject = YourObject(
+                                categoryName: categoryName,
+                                id: ID,
+                                AudioName: audioName);
+                            updatedList = updateListWithCategory(
+                                newCategoryObject, widget.selected);
+
+                            print(updatedList);
+                            selectedRows[categoryName] =
+                                value as int?; // Change to int? if needed
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+        }
+      },
     );
   }
 }

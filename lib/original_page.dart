@@ -1,157 +1,520 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// // ignore_for_file: use_full_hex_values_for_flutter_colors
+
+// import 'package:flutter/material.dart';
+// import 'package:new_zen_up/home_page.dart';
+// import 'package:new_zen_up/random_audio.dart';
+
+// class OriginalPage extends StatelessWidget {
+//   const OriginalPage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.black,
+//       body: SafeArea(
+//         child: Center(
+//           child: SingleChildScrollView(
+//             child: Column(
+//               children: [
+//                 Container(
+//                   width: MediaQuery.of(context).size.width - 9,
+//                   height: MediaQuery.of(context).size.height * 0.25,
+//                   decoration: const BoxDecoration(
+//                     image: DecorationImage(
+//                         image: AssetImage(
+//                           'assets/Rectangle 2.png',
+//                         ),
+//                         fit: BoxFit.fill),
+//                     borderRadius: BorderRadius.only(
+//                       bottomLeft: Radius.circular(50),
+//                       bottomRight: Radius.circular(50),
+//                     ),
+//                   ),
+//                   child: Column(
+//                     children: [
+//                       Text(
+//                         'Awareness',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: MediaQuery.of(context).size.width * 0.07,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: MediaQuery.of(context).size.height * 0.025,
+//                       ),
+//                       Text(
+//                         'Breathing',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: MediaQuery.of(context).size.width * 0.07,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: MediaQuery.of(context).size.height * 0.025,
+//                       ),
+//                       Text(
+//                         'Compassion',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: MediaQuery.of(context).size.width * 0.07,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 Container(
+//                   width: MediaQuery.of(context).size.width - 9,
+//                   height: MediaQuery.of(context).size.height * 0.3,
+//                   decoration: BoxDecoration(
+//                     image: const DecorationImage(
+//                       image: AssetImage(
+//                         'assets/Rectangle 3.png',
+//                       ),
+//                       fit: BoxFit.fill,
+//                     ),
+//                     borderRadius: BorderRadius.circular(50),
+//                   ),
+//                   child: Column(
+//                     children: [
+//                       SizedBox(
+//                         height: MediaQuery.of(context).size.height * 0.03,
+//                       ),
+//                       Text(
+//                         'Forgiveness',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: MediaQuery.of(context).size.width * 0.07,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: MediaQuery.of(context).size.height * 0.025,
+//                       ),
+//                       Text(
+//                         'Gratitude',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: MediaQuery.of(context).size.width * 0.07,
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: MediaQuery.of(context).size.height * 0.02,
+//                       ),
+//                       Text(
+//                         'Happiness',
+//                         style: TextStyle(
+//                           color: Colors.white,
+//                           fontSize: MediaQuery.of(context).size.width * 0.07,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//                 GestureDetector(
+//                   onTap: () {
+//                     Navigator.push(
+//                       context,
+//                       MaterialPageRoute(
+//                           builder: (context) => const HomePage(
+//                                 CatName: 'Awareness',
+//                                 imageName: 'assets/Group 3160.png',
+//                                 color1: Color(0xFFFFF3F3F),
+//                                 color2: Color(0xFFFFF3F3F),
+//                                 // audioBloc: AudioBloc(),
+//                                 CatChar: "A",
+//                               )),
+//                     );
+//                   },
+//                   child: const ChooseButton(
+//                     text: "Program your own personalized meditation",
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height * 0.01,
+//                 ),
+//                 GestureDetector(
+//                   onTap: () {},
+//                   child: const ChooseButton(
+//                     text: "Play previous program",
+//                   ),
+//                 ),
+//                 SizedBox(
+//                   height: MediaQuery.of(context).size.height * 0.01,
+//                 ),
+//                 GestureDetector(
+//                   onTap: () {
+//                     Navigator.push(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => const RandomAudio(),
+//                       ),
+//                     );
+//                   },
+//                   child: const ChooseButton(
+//                     text: "Choose by number of minutes",
+//                   ),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 import 'package:flutter/material.dart';
+import 'package:new_zen_up/app_router.dart';
+import 'package:new_zen_up/constant.dart';
 import 'package:new_zen_up/home_page.dart';
+import 'package:new_zen_up/original_page.dart';
+import 'package:new_zen_up/profile_page.dart';
 import 'package:new_zen_up/random_audio.dart';
 
-class OriginalPage extends StatelessWidget {
-  const OriginalPage({super.key});
+class OriginalPage extends StatefulWidget {
+  @override
+  _OriginalPageState createState() => _OriginalPageState();
+}
 
+class _OriginalPageState extends State<OriginalPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Stack(
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width - 9,
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                          'assets/Rectangle 2.png',
-                        ),
-                        fit: BoxFit.fill),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(50),
-                      bottomRight: Radius.circular(50),
-                    ),
-                  ),
+                Image.asset(
+                  'assets/home.png',
+                  fit: BoxFit.fill,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.45,
+                ),
+                // Images and Text Column
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.08,
+                  left: 0,
+                  right: 0,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        'Awareness',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors
+                                        .white, // Set your desired border color
+                                    width: 4.0, // Set the border width
+                                  ),
+                                  // borderRadius: BorderRadius.circular(
+                                  //     8.0), // Set border radius if needed
+                                ),
+                                child: Image.asset(
+                                  'assets/1 (1).png',
+                                  // fit: BoxFit.fill,
+                                  fit: BoxFit.contain,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.19,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                ),
+                              ),
+                              Text(
+                                'Awareness',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05),
+                          Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors
+                                        .white, // Set your desired border color
+                                    width: 4.0, // Set the border width
+                                  ),
+                                ),
+                                child: Image.asset(
+                                  'assets/10.png',
+                                  fit: BoxFit.contain,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.19,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                ),
+                              ),
+                              Text(
+                                'Breathing',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05),
+                          Column(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: Colors
+                                        .white, // Set your desired border color
+                                    width: 4.0, // Set the border width
+                                  ),
+                                ),
+                                child: Image.asset(
+                                  'assets/3-2.png',
+                                  fit: BoxFit.contain,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.19,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                ),
+                              ),
+                              Text(
+                                'Compassion',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.025,
-                      ),
-                      Text(
-                        'Breathing',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.025,
-                      ),
-                      Text(
-                        'Compassion',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
+                          height: MediaQuery.of(context).size.height * 0.06),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 0, right: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors
+                                          .white, // Set your desired border color
+                                      width: 4.0, // Set the border width
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    fit: BoxFit.contain,
+                                    'assets/9.png',
+                                    width: MediaQuery.of(context).size.width *
+                                        0.19,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                  ),
+                                ),
+                                Text(
+                                  'Forgiveness',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.05),
+                            Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors
+                                          .white, // Set your desired border color
+                                      width: 4.0, // Set the border width
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    'assets/8.png',
+                                    fit: BoxFit.contain,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.19,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                  ),
+                                ),
+                                Text(
+                                  'Gratitude',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.05),
+                            Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors
+                                          .white, // Set your desired border color
+                                      width: 4.0, // Set the border width
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    fit: BoxFit.contain,
+                                    'assets/7.png',
+                                    width: MediaQuery.of(context).size.width *
+                                        0.19,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.07,
+                                  ),
+                                ),
+                                Text(
+                                  'Happiness',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 9,
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/Rectangle 3.png',
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Text(
-                        'Forgiveness',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.025,
-                      ),
-                      Text(
-                        'Gratitude',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Text(
-                        'Happiness',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.07,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomePage(
-                                CatName: 'Awareness',
-                                imageName: 'assets/Group 3160.png',
-                                color1: Color(0xFFFFF3F3F),
-                                color2: Color(0xFFFFF3F3F),
-                              )),
-                    );
-                  },
-                  child: const ChooseButton(
-                    text: "Program your own personalized meditation",
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: const ChooseButton(
-                    text: "Play previous program",
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.01,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RandomAudio(),
-                      ),
-                    );
-                  },
-                  child: const ChooseButton(
-                    text: "Choose by number of minutes",
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.06,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(
+                      CatName: 'Awareness',
+                      imageName: 'assets/Group 3160.png',
+                      color1: Color(0xFFFFF3F3F),
+                      color2: Color(0xFFFFF3F3F),
+                      CatChar: "A",
+                    ),
+                  ),
+                );
+              },
+              child: const ChooseButton(
+                text: "Personalise your 6-elements",
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: const ChooseButton(
+                text: "Play previous",
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RandomAudio(),
+                  ),
+                );
+              },
+              child: const ChooseButton(
+                text: "Choose by no. of mins",
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: CustomNavBar(),
+    );
+  }
+}
+
+class CustomNavBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(50.0),
+          topRight: Radius.circular(50.0),
+        ),
+        color: kPrimaryColor,
+      ),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Transform.translate(
+          offset: Offset(0.0, -30.0),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfilePage(),
+                ),
+              );
+            },
+            child: Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                border: Border.all(
+                  color: Color(0XFFF8460F4),
+                  width: 2.0,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person_2_outlined,
+                    color: Color(0XFFF8460F4),
+                    size: 30.0,
+                  ),
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                      color: Color(0XFFF8460F4),
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -190,9 +553,9 @@ class ChooseButton extends StatelessWidget {
                 maxLines: 2, // Set the maximum number of lines
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500),
               ),
             ),
             Container(

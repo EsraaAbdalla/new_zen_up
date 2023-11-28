@@ -26,7 +26,7 @@ class AboutUs extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Align(
+                  child: const Align(
                     alignment: Alignment.topLeft,
                     child: Icon(
                       Icons.arrow_back_ios_new_rounded,

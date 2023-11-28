@@ -25,10 +25,22 @@ class LoginPage extends StatelessWidget {
           if (state is LoginSuccess) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SuccessRegister()),
+              MaterialPageRoute(builder: (context) => const SuccessRegister()),
             );
           } else if (state is LoginFailure) {
-            // Handle login failure
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Error'),
+                content: Text(state.error),
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+            );
           }
         },
         child: Padding(

@@ -3,4 +3,4 @@
 import 'package:flutter/material.dart';
 
 dynamic kPrimaryColor =
-    Color.lerp(const Color(0XFFFCC8FED), const Color(0XFFF6B50F6), 0.5);
+    Color.lerp(const Color(0XFFFEEA4CE), const Color(0XFFFC150F6), 0.5);

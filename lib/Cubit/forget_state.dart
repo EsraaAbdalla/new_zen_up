@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:equatable/equatable.dart';
+import 'package:new_zen_up/shareed_preferences.dart';
+
+String? token1;
 
 // State
 abstract class ForgotPasswordState extends Equatable {
@@ -69,14 +74,27 @@ class ForgotPasswordBloc
 
       if (response.statusCode == 200) {
         emit(ForgotPasswordSuccess());
+        // Assuming responseBody is the JSON string you provided
+        String responseBody = response.body;
+        print(response.body);
+// Convert the JSON string to a Dart map
+        Map<String, dynamic> responseMap = json.decode(responseBody);
+
+// Access the token from the map
+        String token = responseMap['resetTokenData']['token'];
+        token1 = token;
+
+// Print or use the token as needed
+        print('Token: $token1');
+        saveTokenToLocal(token);
+        // print(response.body);
       } else {
         final error = json.decode(response.body)['error'] as String;
         emit(ForgotPasswordFailure(error));
       }
     } catch (error) {
       print(error);
-      emit(const ForgotPasswordFailure(
-          'Failed to reset password. Please try again.'));
+      emit(ForgotPasswordFailure('$error'));
     }
   }
 }

@@ -1,5 +1,9 @@
 // import 'package:flutter/material.dart';
-// import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+// // import 'package:new_zen_up/accordion_page.dart';
+
+// // import 'package:new_zen_up/try.dart';
+// import 'package:new_zen_up/ver_code.dart';
+// // import 'package:new_zen_up/uni_test.dart';
 
 // void main() {
 //   runApp(MyApp());
@@ -9,7 +13,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
-//       home: MyHomePage(),
+//       home: VerificationCode(),
 //     );
 //   }
 // }
@@ -113,7 +117,7 @@
 //     );
 //   }
 // }
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_zen_up/Cubit/create_new_pass_state.dart';
@@ -123,6 +127,8 @@ import 'package:new_zen_up/Cubit/reset_pass_state.dart';
 import 'package:new_zen_up/Cubit/signup_state.dart';
 import 'package:http/http.dart' as http;
 import 'package:new_zen_up/app_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:new_zen_up/icon.dart';
 
 void main() {
   runApp(const MyApp());
@@ -136,6 +142,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Future<bool> isUserAuthenticated() async {
+    // Check if the user is already authenticated
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('authToken');
+
+    return token != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -155,20 +169,14 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<ResetPasswordBloc>(
           create: (context) => ResetPasswordBloc(httpClient: http.Client()),
         ),
+        // BlocProvider<AudioBloc>(
+        //   create: (context) => AudioBloc(),
+        // ),
       ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
-
-        //color: Colors.black,
-        // home: HomePage(
-        //   CatName: 'Awareness',
-        //   imageName: 'assets/Group 3160.png',
-        //   color1: Color(0xFFFFF3F3F),
-        //   color2: Color(0xFFFFF3F3F),
-        // ),
-        // home: AboutUs(),
       ),
     );
   }

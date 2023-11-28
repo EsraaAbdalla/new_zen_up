@@ -65,8 +65,7 @@ class SuccessRegister extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const OriginalPage()),
+                    MaterialPageRoute(builder: (context) => OriginalPage()),
                   );
                 },
               ),

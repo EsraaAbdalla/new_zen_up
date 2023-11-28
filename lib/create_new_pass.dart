@@ -1,14 +1,24 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_build_context_synchronously, use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_zen_up/Cubit/create_new_pass_state.dart';
+import 'package:new_zen_up/login_page.dart';
+import 'package:new_zen_up/shareed_preferences.dart';
+
+String? newPassword;
+String? ConfirmNewPassword;
+String? token;
 
 class CreateNewPasswordPage extends StatelessWidget {
-  final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> newPasswordVisible = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> confirmNewPasswordVisible =
+      ValueNotifier<bool>(false);
   final TextEditingController newPasswordController = TextEditingController();
+  final TextEditingController confirmNewPasswordController =
+      TextEditingController();
 
-  CreateNewPasswordPage({super.key});
+  CreateNewPasswordPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +58,7 @@ class CreateNewPasswordPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Icon(
                       Icons.arrow_back_ios_new_rounded,
@@ -56,7 +66,6 @@ class CreateNewPasswordPage extends StatelessWidget {
                       size: 24,
                     ),
                   ),
-
                   const Text(
                     'Create New Password ',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
@@ -65,14 +74,9 @@ class CreateNewPasswordPage extends StatelessWidget {
                     height: 20,
                   ),
                   ValueListenableBuilder<bool>(
-                    valueListenable: passwordVisible,
+                    valueListenable: newPasswordVisible,
                     builder: (context, isVisible, child) {
                       return TextField(
-                        onTap: () {
-                          final newPassword = newPasswordController.text;
-                          createNewPasswordBloc
-                              .add(CreateNewPasswordButtonPressed(newPassword));
-                        },
                         controller: newPasswordController,
                         obscureText: !isVisible,
                         decoration: InputDecoration(
@@ -88,7 +92,8 @@ class CreateNewPasswordPage extends StatelessWidget {
                               const Icon(Icons.lock, color: Color(0xFFFADA4A5)),
                           suffixIcon: GestureDetector(
                             onTap: () {
-                              passwordVisible.value = !passwordVisible.value;
+                              newPasswordVisible.value =
+                                  !newPasswordVisible.value;
                             },
                             child: Icon(
                               isVisible
@@ -104,15 +109,10 @@ class CreateNewPasswordPage extends StatelessWidget {
                     height: 15,
                   ),
                   ValueListenableBuilder<bool>(
-                    valueListenable: passwordVisible,
+                    valueListenable: confirmNewPasswordVisible,
                     builder: (context, isVisible, child) {
                       return TextField(
-                        onTap: () {
-                          final newPassword = newPasswordController.text;
-                          createNewPasswordBloc
-                              .add(CreateNewPasswordButtonPressed(newPassword));
-                        },
-                        controller: newPasswordController,
+                        controller: confirmNewPasswordController,
                         obscureText: !isVisible,
                         decoration: InputDecoration(
                           filled: true,
@@ -127,7 +127,8 @@ class CreateNewPasswordPage extends StatelessWidget {
                               const Icon(Icons.lock, color: Color(0xFFFADA4A5)),
                           suffixIcon: GestureDetector(
                             onTap: () {
-                              passwordVisible.value = !passwordVisible.value;
+                              confirmNewPasswordVisible.value =
+                                  !confirmNewPasswordVisible.value;
                             },
                             child: Icon(
                               isVisible
@@ -139,14 +140,7 @@ class CreateNewPasswordPage extends StatelessWidget {
                       );
                     },
                   ),
-                  // TextField(
-                  //   controller: newPasswordController,
-                  //   decoration: InputDecoration(
-                  //     labelText: 'New Password',
-                  //   ),
-                  // ),
                   const SizedBox(height: 16.0),
-
                   TextButton(
                     style: TextButton.styleFrom(
                         minimumSize: const Size(315, 60),
@@ -167,20 +161,36 @@ class CreateNewPasswordPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    onPressed: () {
-                      final newPassword = newPasswordController.text;
-                      createNewPasswordBloc
-                          .add(CreateNewPasswordButtonPressed(newPassword));
+                    onPressed: () async {
+                      newPassword = newPasswordController.text;
+                      ConfirmNewPassword = confirmNewPasswordController.text;
+
+                      token = await getTokenFromLocal();
+                      createNewPasswordBloc.add(
+                          CreateNewPasswordButtonPressed(newPassword!, token!));
+                      if (newPassword == ConfirmNewPassword) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            // title: const Text(''),
+                            content:
+                                const Text('Both Password are not the same'),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     },
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     final newPassword = newPasswordController.text;
-                  //     createNewPasswordBloc
-                  //         .add(CreateNewPasswordButtonPressed(newPassword));
-                  //   },
-                  //   child: Text('Create Password'),
-                  // ),
                 ],
               ),
             );

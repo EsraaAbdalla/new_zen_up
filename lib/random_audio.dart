@@ -1,11 +1,54 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:new_zen_up/audio_ready.dart';
 import 'package:new_zen_up/nav_bar.dart';
+import 'package:http/http.dart' as http;
 import 'package:new_zen_up/original_page.dart';
 
-class RandomAudio extends StatelessWidget {
+Future<List<Map<String, dynamic>>> getRandomAudios(String minutes) async {
+  final String apiUrl =
+      'https://meditation-0gig.onrender.com/get-random-audios';
+  final Map<String, String> headers = {'Content-Type': 'application/json'};
+  final Map<String, dynamic> body = {'minutes': minutes};
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      // Successfully fetched data, parse and return the result
+      List<dynamic> data = jsonDecode(response.body);
+      List<Map<String, dynamic>> audioList = List<Map<String, dynamic>>.from(
+        data.map((item) => Map<String, dynamic>.from(item)),
+      );
+      return audioList;
+    } else {
+      // Handle errors, e.g., throw an exception or return an empty list
+      print('Error: ${response.statusCode}');
+      return [];
+    }
+  } catch (error) {
+    // Handle other errors, e.g., throw an exception or return an empty list
+    print('Error: $error');
+    return [];
+  }
+}
+
+class RandomAudio extends StatefulWidget {
   const RandomAudio({super.key});
+
+  @override
+  State<RandomAudio> createState() => _RandomAudioState();
+}
+
+class _RandomAudioState extends State<RandomAudio> {
+  TextEditingController _minutesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +106,6 @@ class RandomAudio extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  Text(
-                    '(!No decimal)',
-                    style: TextStyle(
-                      color: Color(0XFFFFF0000),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  )
                 ],
               ),
             ),
@@ -80,6 +115,8 @@ class RandomAudio extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 22),
               child: TextField(
+                controller: _minutesController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: const Color.fromARGB(255, 245, 245, 245),
@@ -104,7 +141,7 @@ class RandomAudio extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(99),
                   color: Colors.purpleAccent,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Color.fromARGB(
                           255, 214, 206, 206), // Color of the shadow
@@ -115,8 +152,26 @@ class RandomAudio extends StatelessWidget {
                   ],
                 ),
                 child: TextButton(
-                  onPressed: () {
-                    // Add your button action here
+                  onPressed: () async {
+                    String minutes = _minutesController.text;
+                    print(
+                        minutes); // Change this to the desired number of minutes
+                    List<Map<String, dynamic>> result =
+                        await getRandomAudios(minutes);
+                    if (result.isNotEmpty) {
+                      // Handle the result, for example, navigate to the next screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AudioReady(
+                            listOfAudios: result,
+                          ),
+                        ),
+                      );
+                    } else {
+                      // Handle the case when the result is empty or an error occurred
+                      print('Error or empty result');
+                    }
                   },
                   child: Center(
                     child: Row(
@@ -165,7 +220,7 @@ class RandomAudio extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const NavBar(),
+                        builder: (context) => OriginalPage(),
                       ),
                     );
                   },

@@ -1,21 +1,73 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
+import 'package:new_zen_up/Cubit/login_state.dart';
+import 'package:new_zen_up/accordion_page.dart';
+import 'package:new_zen_up/play_audio.dart';
 
-class AudioReady extends StatelessWidget {
-  final List<String> dataList = [
-    '1-Wake Up Now',
-    '2-This Time Up',
-    '3-Let’s Start',
-    '4-Welcome Back',
-    '5-Relax',
-    '6-Now Or Never',
-  ];
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-  AudioReady({Key? key}) : super(key: key);
+var id;
+String? mergeAudio;
+
+Future<String?> mergeAudios(List<dynamic> audioIds) async {
+  final String apiUrl = 'https://meditation-0gig.onrender.com/mergeAudios';
+  final Map<String, String> headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $accessToken'
+  };
+  final Map<String, dynamic> body = {'audioIds': audioIds};
+
+  try {
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      // Successfully merged audio, parse and return the mixed audio path
+      Map<String, dynamic> responseData = jsonDecode(response.body);
+      return responseData['mixedAudioPath'];
+    } else {
+      // Handle errors, e.g., throw an exception or return null
+      print('Error: ${response.statusCode}');
+      return null;
+    }
+  } catch (error) {
+    // Handle other errors, e.g., throw an exception or return null
+    print('Error: $error');
+    return null;
+  }
+}
+
+class AudioReady extends StatefulWidget {
+  AudioReady({Key? key, required this.listOfAudios}) : super(key: key);
+  final List<Map<String, dynamic>> listOfAudios;
+  @override
+  State<AudioReady> createState() => _AudioReadyState();
+}
+
+class _AudioReadyState extends State<AudioReady> {
+  // final List<String> dataList = [
+  //   '1-Wake Up Now',
+  //   '2-This Time Up',
+  //   '3-Let’s Start',
+  //   '4-Welcome Back',
+  //   '5-Relax',
+  //   '6-Now Or Never',
+  // ];
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> audioIds =
+        widget.listOfAudios.map((item) => item['_id']).toList();
+    print(audioIds);
+    List<dynamic> audioName =
+        widget.listOfAudios.map((item) => item['name']).toList();
+    print(audioName);
+
     return Scaffold(
         body: ListView(
       children: [
@@ -36,16 +88,17 @@ class AudioReady extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Column(
-          children: dataList.map((item) {
+          children: widget.listOfAudios.map((item) {
+            final name = item["name"];
+            id = item["_id"];
             return Column(
               children: [
                 ListTile(
                   title: Text(
-                    item,
+                    name ?? '',
                     style: const TextStyle(color: Color(0XFFFB6B4C2)),
                   ),
                 ),
-                //  SizedBox(height: 1),
               ],
             );
           }).toList(),
@@ -53,7 +106,7 @@ class AudioReady extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(15),
           child: Ink(
-            //  width: ,
+            //  width: ,1
             height: 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(99),
@@ -67,8 +120,29 @@ class AudioReady extends StatelessWidget {
               ],
             ),
             child: TextButton(
-              onPressed: () {
-                // Add your button action here
+              onPressed: () async {
+                // Assuming you have a list of audioIds, replace it with your actual audioIds
+                // await mergeAudios(audioIds);
+                // Call the mergeAudios function
+                String? mixedAudioPath = await mergeAudios(audioIds);
+                print(mixedAudioPath);
+
+                if (mixedAudioPath != null) {
+                  mergeAudio =
+                      'https://meditation-0gig.onrender.com${mixedAudioPath}';
+                  // Successfully obtained mixed audio path, you can use it as needed
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AudioPlayerApp(
+                              finalMergedAudio: mergeAudio!,
+                            )),
+                  );
+                } else {
+                  // Handle the case when the merging failed or an error occurred
+                  print('Failed to merge audio.');
+                }
               },
               child: Center(
                 child: Row(
@@ -113,7 +187,13 @@ class AudioReady extends StatelessWidget {
             ),
             child: TextButton(
               onPressed: () {
-                // Add your button action here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AccordionPage(
+                            selected: widget.listOfAudios,
+                          )),
+                );
               },
               child: Center(
                 child: Row(

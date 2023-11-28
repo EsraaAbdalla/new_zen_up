@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
+String? accessToken;
+
 class LoginBloc extends Cubit<LoginState> {
   LoginBloc() : super(LoginInitial());
 
@@ -22,13 +24,19 @@ class LoginBloc extends Cubit<LoginState> {
 
       if (response.statusCode == 201) {
         emit(LoginSuccess());
-        print('Success');
+
+        Map<String, dynamic> accessTokenJson = jsonDecode(response.body);
+
+        accessToken = accessTokenJson['accessToken'];
+
+        print(accessToken);
       } else {
         emit(LoginFailure('Invalid credentials'));
-        print(response.headers);
+        print('Invalid credentials');
       }
     } catch (e) {
-      emit(LoginFailure('An error occurred'));
+      emit(LoginFailure('$e'));
+      print('$e');
     }
   }
 }

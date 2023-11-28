@@ -52,6 +52,12 @@ dependencies:
   audio_service: ^0.18.12
   flutter_seekbar: ^0.0.1
   get: ^4.6.5
+  fluro: ^2.0.5
+  audio_video_progress_bar: ^1.0.1
+  just_audio: ^0.9.35
+  audioplayers: ^4.1.0
+  uni_links: ^0.5.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -104,6 +110,16 @@ flutter:
     - assets/Group 44.png
     - assets/random.png
     - assets/Group 12558.png
+    - assets/02.png
+    - assets/home.png
+    - assets/1 (1).png
+    - assets/01.png
+    - assets/02.png
+    - assets/3-2.png
+    - assets/7.png
+    - assets/8.png
+    - assets/9.png
+    - assets/10.png
       
 
   # An image asset can refer to one or more resolution-specific "variants", see

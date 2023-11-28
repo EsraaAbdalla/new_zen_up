@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_zen_up/Cubit/reset_pass_state.dart';
-import 'package:new_zen_up/constant.dart';
+import 'package:new_zen_up/login_page.dart';
 
 class ResetPasswordPage extends StatelessWidget {
   final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
@@ -57,7 +57,7 @@ class ResetPasswordPage extends StatelessWidget {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.topLeft,
                       child: Icon(
                         Icons.arrow_back_ios_new_rounded,
@@ -119,7 +119,7 @@ class ResetPasswordPage extends StatelessWidget {
                           border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(14)),
-                          labelText: 'New Password',
+                          labelText: 'Password',
                           labelStyle:
                               const TextStyle(color: Color(0xFFFADA4A5)),
                           prefixIcon:
@@ -144,7 +144,13 @@ class ResetPasswordPage extends StatelessWidget {
                     valueListenable: passwordVisible,
                     builder: (context, isVisible, child) {
                       return TextField(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        },
                         controller: confirmPasswordController,
                         obscureText: !isVisible,
                         decoration: InputDecoration(

@@ -94,7 +94,7 @@ class _NavBarState extends State<NavBar> {
         ),
       ],
       bodyItems: [
-        const OriginalPage(),
+        OriginalPage(),
         Container(
           height: MediaQuery.of(context).size.height,
           color: Colors.black,

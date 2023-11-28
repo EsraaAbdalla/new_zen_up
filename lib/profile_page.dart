@@ -1,12 +1,11 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:new_zen_up/about_us.dart';
-import 'package:new_zen_up/constant.dart';
 import 'package:new_zen_up/contact_us.dart';
+import 'package:new_zen_up/login_page.dart';
 import 'package:new_zen_up/reset_pass.dart';
+import 'package:new_zen_up/shareed_preferences.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -35,7 +34,7 @@ class ProfilePage extends StatelessWidget {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back_ios,
                       color: Colors.white,
                       size: 17,
@@ -55,7 +54,7 @@ class ProfilePage extends StatelessWidget {
             padding: const EdgeInsets.only(left: 19, right: 19, top: 12),
             child: Ink(
               width: MediaQuery.of(context).size.width,
-              height: 450,
+              height: 490,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -201,7 +200,11 @@ class ProfilePage extends StatelessWidget {
                     trailing: const Icon(Icons.arrow_forward_ios_rounded,
                         color: Color(0XFFFABABAB)),
                     onTap: () {
-                      // Handle the onTap event for Item 1
+                      removeToken();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
                     },
                   ),
                 ],
@@ -294,7 +297,8 @@ class ProfilePage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AboutUs()),
+                        MaterialPageRoute(
+                            builder: (context) => const AboutUs()),
                       );
                     },
                   ),

@@ -36,11 +36,12 @@ abstract class CreateNewPasswordEvent extends Equatable {
 
 class CreateNewPasswordButtonPressed extends CreateNewPasswordEvent {
   final String newPassword;
+  final String resetToken;
 
-  const CreateNewPasswordButtonPressed(this.newPassword);
+  const CreateNewPasswordButtonPressed(this.newPassword, this.resetToken);
 
   @override
-  List<Object?> get props => [newPassword];
+  List<Object?> get props => [newPassword, resetToken];
 }
 
 // BLoC
@@ -59,16 +60,19 @@ class CreateNewPasswordBloc
 
     try {
       final response = await httpClient.post(
-        Uri.parse(
-            'https://meditation-0gig.onrender.com/auth/reset-password'), // Replace with your API endpoint
+        Uri.parse('https://meditation-0gig.onrender.com/auth/reset-password'),
+        // Replace with your API endpoint
         body: json.encode({
           'newPassword': event.newPassword,
+          'resetToken':
+              event.resetToken, // Add resetToken to the request payload
         }),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
         emit(CreateNewPasswordSuccess());
+        print("Success");
       } else {
         final error = json.decode(response.body)['error'] as String;
         emit(CreateNewPasswordFailure(error));
@@ -76,6 +80,7 @@ class CreateNewPasswordBloc
     } catch (error) {
       emit(const CreateNewPasswordFailure(
           'Failed to create new password. Please try again.'));
+      print(error);
     }
   }
 }
