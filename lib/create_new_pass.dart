@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_zen_up/Cubit/create_new_pass_state.dart';
 import 'package:new_zen_up/login_page.dart';
-import 'package:new_zen_up/shareed_preferences.dart';
+import 'package:new_zen_up/ver_code.dart';
 
 String? newPassword;
 String? ConfirmNewPassword;
@@ -165,9 +165,9 @@ class CreateNewPasswordPage extends StatelessWidget {
                       newPassword = newPasswordController.text;
                       ConfirmNewPassword = confirmNewPasswordController.text;
 
-                      token = await getTokenFromLocal();
+                      // token = await getTokenFromLocal();
                       createNewPasswordBloc.add(
-                          CreateNewPasswordButtonPressed(newPassword!, token!));
+                          CreateNewPasswordButtonPressed(newPassword!, Code!));
                       if (newPassword == ConfirmNewPassword) {
                         Navigator.push(
                           context,

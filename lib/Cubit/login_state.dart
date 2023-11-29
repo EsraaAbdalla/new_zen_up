@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:new_zen_up/shareed_preferences.dart';
 
 String? accessToken;
 
@@ -28,7 +29,7 @@ class LoginBloc extends Cubit<LoginState> {
         Map<String, dynamic> accessTokenJson = jsonDecode(response.body);
 
         accessToken = accessTokenJson['accessToken'];
-
+        saveTokenToLocal(accessToken!);
         print(accessToken);
       } else {
         emit(LoginFailure('Invalid credentials'));

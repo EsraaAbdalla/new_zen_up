@@ -137,6 +137,7 @@ class _AudioReadyState extends State<AudioReady> {
                     MaterialPageRoute(
                         builder: (context) => AudioPlayerApp(
                               finalMergedAudio: mergeAudio!,
+                              listOfAudios: widget.listOfAudios,
                             )),
                   );
                 } else {

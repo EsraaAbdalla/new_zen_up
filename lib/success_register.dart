@@ -1,11 +1,65 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors
+// ignore_for_file: use_full_hex_values_for_flutter_colors, avoid_print, prefer_const_declarations
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
 import 'package:new_zen_up/original_page.dart';
+import 'package:http/http.dart' as http;
+import 'package:new_zen_up/shareed_preferences.dart';
 
-class SuccessRegister extends StatelessWidget {
+class SuccessRegister extends StatefulWidget {
   const SuccessRegister({super.key});
+
+  @override
+  State<SuccessRegister> createState() => _SuccessRegisterState();
+}
+
+class _SuccessRegisterState extends State<SuccessRegister> {
+  String userName = 'Loading...'; // Initial value while fetching
+
+  Future<void> fetchUserName() async {
+    try {
+      final String apiUrl =
+          'https://meditation-0gig.onrender.com/auth/user-name';
+
+      // Retrieve the access token from local storage
+      final String? accessToken = await getTokenFromLocal();
+
+      if (accessToken == null) {
+        print('Access token not found.');
+        // Handle the case where the access token is not available
+        return;
+      }
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Parse and use the response as needed
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        String fetchedUserName = responseData['user'];
+        print(fetchedUserName);
+        setState(() {
+          userName = fetchedUserName;
+        });
+      } else {
+        print('Failed to fetch user name. Status code: ${response.statusCode}');
+        // Handle failure, you can check response.body for more details
+      }
+    } catch (error) {
+      print('Error occurred during user name fetch: $error');
+      // Handle other errors
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserName(); // Initial fetch when the widget is created
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +72,9 @@ class SuccessRegister extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              "Welcome, Stefani",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Text(
+              "Welcome,  $userName",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 5,

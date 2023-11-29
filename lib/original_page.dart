@@ -162,15 +162,20 @@
 //   }
 // }
 
-// ignore_for_file: library_private_types_in_public_api, use_full_hex_values_for_flutter_colors
+// ignore_for_file: library_private_types_in_public_api, use_full_hex_values_for_flutter_colors, use_build_context_synchronously, avoid_print, prefer_const_declarations
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
 import 'package:new_zen_up/constant.dart';
 import 'package:new_zen_up/home_page.dart';
+import 'package:new_zen_up/play_audio.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:new_zen_up/profile_page.dart';
 import 'package:new_zen_up/random_audio.dart';
+import 'package:new_zen_up/shareed_preferences.dart';
 
 class OriginalPage extends StatefulWidget {
   const OriginalPage({super.key});
@@ -180,6 +185,58 @@ class OriginalPage extends StatefulWidget {
 }
 
 class _OriginalPageState extends State<OriginalPage> {
+  String? fetchedpreviousAudio;
+  Future<void> fetchPreviousAudio() async {
+    try {
+      final String apiUrl =
+          'https://meditation-0gig.onrender.com/previous-audio';
+
+      // Retrieve the access token from local storage
+      final String? accessToken = await getTokenFromLocal();
+
+      if (accessToken == null) {
+        print(
+            'Access token not found. Please log in.'); // Handle the case where the access token is not available
+        // You might want to navigate to the login screen or take other actions here
+        return;
+      }
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print("Done");
+        // Check if the response body is not null
+        final Map<String, dynamic> previousAudioList =
+            json.decode(response.body);
+        print(previousAudioList);
+        fetchedpreviousAudio = previousAudioList['perviousMixLink'];
+        print(fetchedpreviousAudio);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AudioPlayerApp(
+              finalMergedAudio: fetchedpreviousAudio!,
+              listOfAudios: const [],
+            ),
+          ),
+        );
+      } else {
+        print(
+            'Failed to fetch previous audio. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        // Handle failure, you can check response.body for more details
+      }
+    } catch (error) {
+      print('Error occurred during previous audio fetch: $error');
+      // Handle other errors
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -411,7 +468,7 @@ class _OriginalPageState extends State<OriginalPage> {
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.06,
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             GestureDetector(
               onTap: () {
@@ -436,7 +493,9 @@ class _OriginalPageState extends State<OriginalPage> {
               height: MediaQuery.of(context).size.height * 0.03,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                fetchPreviousAudio();
+              },
               child: const ChooseButton(
                 text: "Play previous",
               ),

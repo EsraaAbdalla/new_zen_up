@@ -2,25 +2,12 @@
 
 // import 'dart:ffi';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/audio_ready.dart';
 import 'package:new_zen_up/cat_circle.dart';
 import 'package:new_zen_up/original_page.dart';
 import 'package:new_zen_up/test_display.dart';
 import 'package:http/http.dart' as http;
-
-// Future<Map<String, dynamic>> fetchAudiosByCategory(String categoryName) async {
-//   final String baseUrl = 'https://meditation-0gig.onrender.com';
-//   final response =
-//       await http.get(Uri.parse('$baseUrl/getAudiosByCat/$categoryName'));
-
-//   if (response.statusCode == 200) {
-//     return json.decode(response.body);
-//   } else {
-//     throw Exception('Failed to load data from the API');
-//   }
-// }
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -190,6 +177,8 @@ class _HomeSkipState extends State<HomeSkip> {
         children: [
           GestureDetector(
             onTap: () {
+              selectedAudios.clear();
+
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const OriginalPage()),

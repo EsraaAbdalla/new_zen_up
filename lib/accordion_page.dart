@@ -30,11 +30,12 @@ List<Map<String, dynamic>> updateListWithCategory(
 
   if (index != -1) {
     // Replace the existing object with the new one
-    selected[index] =
-        newObject.toJson(); // Assuming YourObject has a toJson method
+    selected[index] = newObject.toJson();
+    print('updated'); // Assuming YourObject has a toJson method
   } else {
     // If the category name doesn't exist, add the new object
     selected.add(newObject.toJson());
+    print('add');
   }
 
   return selected;
@@ -330,16 +331,18 @@ class _MyDataTableState extends State<MyDataTable> {
                         groupValue: selectedRows[categoryName],
                         onChanged: (value) {
                           setState(() {
+                            selectedRows[categoryName] = value as int?;
                             YourObject newCategoryObject = YourObject(
-                                categoryName: categoryName,
-                                id: ID,
-                                AudioName: audioName);
+                              categoryName: categoryName,
+                              id: ID,
+                              AudioName: audioName,
+                            );
                             updatedList = updateListWithCategory(
-                                newCategoryObject, widget.selected);
+                              newCategoryObject,
+                              widget.selected,
+                            );
 
-                            print(updatedList);
-                            selectedRows[categoryName] =
-                                value as int?; // Change to int? if needed
+                            // print(updatedList);
                           });
                         },
                       ),

@@ -244,7 +244,6 @@ class _AudioListPageState extends State<AudioListPage> {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
             final audioList = snapshot.data;
-
             Future<void> toggleAudioPlayback(int index) async {
               if (index == selectedAudioIndex) {
                 if (isPlaying) {
@@ -271,8 +270,6 @@ class _AudioListPageState extends State<AudioListPage> {
               }
             }
 
-            // print(audioList!['Audios'][0]['path']);
-            // print(snapshot);
             return ListView.builder(
               itemCount: audioList!['Audios'].length,
               itemBuilder: (context, index) {
@@ -315,8 +312,11 @@ class _AudioListPageState extends State<AudioListPage> {
                       ///ADD 💖💖💖💖
                       if (selectedAudios.isEmpty) {
                         // If the list is empty, add the ID directly
-                        selectedAudios
-                            .add({"_id": audio['_id'], "name": audio['name']});
+                        selectedAudios.add({
+                          "_id": audio['_id'],
+                          "name": audio['name'],
+                          "categoryName": audio['categoryName']
+                        });
                         if (selectedAudios.length == 1) {
                           Navigator.push(
                               context,
@@ -389,8 +389,11 @@ class _AudioListPageState extends State<AudioListPage> {
                         }
                         if (!idExists) {
                           // If the ID is not in the list, add it
-                          selectedAudios.add(
-                              {"_id": audio['_id'], "name": audio['name']});
+                          selectedAudios.add({
+                            "_id": audio['_id'],
+                            "name": audio['name'],
+                            "categoryName": audio['categoryName']
+                          });
                           if (selectedAudios.length == 1) {
                             Navigator.push(
                                 context,
@@ -463,7 +466,7 @@ class _AudioListPageState extends State<AudioListPage> {
                         }
                       }
                       print(selectedAudios);
-//💖💖💖💖💖💖💖💖💖💖
+                      //💖💖💖💖💖💖💖💖💖💖
                       //////////////////////////////////////////////////////////////////
                       //.........................
                       // if (selectedAudios.isEmpty) {
@@ -528,29 +531,3 @@ class audioIds {
   late String CatName;
   late String id;
 }
-
-  // Future<void> toggleAudioPlayback(int index) async {
-  //             if (index == selectedAudioIndex) {
-  //               if (isPlaying) {
-  //                 await audioPlayer.pause();
-  //                 setState(() {
-  //                   isPlaying = false;
-  //                   iconData = Icons.play_arrow;
-  //                 });
-  //               } else {
-  //                 await audioPlayer.resume(); // Use resume to continue playing
-  //                 setState(() {
-  //                   isPlaying = true;
-  //                   iconData = Icons.pause;
-  //                 });
-  //               }
-  //             } else {
-  //               // Play the selected audio
-  //               playAudio(audioList!['Audios'][index]['path']);
-  //               setState(() {
-  //                 selectedAudioIndex = index;
-  //                 isPlaying = true;
-  //                 iconData = Icons.pause;
-  //               });
-  //             }
-  //           }

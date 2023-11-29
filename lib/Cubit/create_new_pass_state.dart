@@ -62,7 +62,7 @@ class CreateNewPasswordBloc
 
     try {
       final response = await httpClient.post(
-        Uri.parse('https://meditation-0gig.onrender.com/auth/reset-password'),
+        Uri.parse('https://meditation-0gig.onrender.com/api/password/reset'),
         // Replace with your API endpoint
         body: json.encode({
           'newPassword': event.newPassword,

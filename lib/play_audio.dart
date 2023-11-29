@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:new_zen_up/nav_bar.dart';
+import 'package:new_zen_up/original_page.dart';
 
 class AudioPlayerApp extends StatefulWidget {
   final String finalMergedAudio;
-  const AudioPlayerApp({super.key, required this.finalMergedAudio});
+  const AudioPlayerApp(
+      {super.key, required this.finalMergedAudio, required this.listOfAudios});
+  final List<Map<String, dynamic>> listOfAudios;
 
   @override
   _AudioPlayerAppState createState() => _AudioPlayerAppState();
@@ -58,30 +60,6 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Align(
-                //     alignment: Alignment.topRight,
-                //     child: Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: Container(
-                //         width: 50.0,
-                //         height: 50.0,
-                //         decoration: BoxDecoration(
-                //           shape: BoxShape.circle,
-                //           border: Border.all(
-                //             color: Colors.white, // Border color
-                //             width: 2.0, // Border width
-                //           ),
-                //         ),
-                //         child: IconButton(
-                //             onPressed: toggleFavorite,
-                //             icon: Icon(
-                //               isFavorite
-                //                   ? Icons.favorite
-                //                   : Icons.favorite_border,
-                //               color: isFavorite ? Colors.red : Colors.white,
-                //             )),
-                //       ),
-                //     )),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
                 ),
@@ -251,10 +229,11 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
                     ),
                     child: TextButton(
                       onPressed: () {
+                        widget.listOfAudios.clear();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const NavBar()),
+                              builder: (context) => const OriginalPage()),
                         );
                       },
                       child: Center(

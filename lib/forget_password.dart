@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_zen_up/Cubit/forget_state.dart';
-
-import 'package:new_zen_up/create_new_pass.dart';
 import 'package:new_zen_up/login_page.dart';
+import 'package:new_zen_up/ver_code.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -112,7 +111,7 @@ class ForgotPasswordPage extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return CreateNewPasswordPage();
+                            return const VerificationCode();
                           });
                     },
                   ),
