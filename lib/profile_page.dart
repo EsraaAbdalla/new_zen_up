@@ -1,15 +1,22 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors
-
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/about_us.dart';
 import 'package:new_zen_up/contact_us.dart';
 import 'package:new_zen_up/login_page.dart';
+import 'package:new_zen_up/original_page.dart';
 import 'package:new_zen_up/reset_pass.dart';
 import 'package:new_zen_up/shareed_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+// Initial value while fetching
+
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +49,9 @@ class ProfilePage extends StatelessWidget {
                   )),
             ],
           ),
-          const Text(
-            'Mohamoud Saad',
-            style: TextStyle(
+          Text(
+            userName.toUpperCase(),
+            style: const TextStyle(
               color: Color(0XFFFC150F6),
               fontSize: 20,
               fontWeight: FontWeight.bold,

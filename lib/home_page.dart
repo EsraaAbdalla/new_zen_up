@@ -133,6 +133,7 @@ class _HomePageState extends State<HomePage> {
           RecName: widget.CatName.toLowerCase(),
           color1: widget.color1,
           color2: widget.color2,
+          CatName: widget.CatName,
         )),
         const SizedBox(
           height: 15,
@@ -140,6 +141,7 @@ class _HomePageState extends State<HomePage> {
         HomeSkip(
           color: widget.color2,
           catChar: widget.CatChar,
+          CatName: widget.CatName,
         ),
         const SizedBox(
             height: 30), // Add spacing between HomeSkip and CatCircle
@@ -158,10 +160,12 @@ class _HomePageState extends State<HomePage> {
 class HomeSkip extends StatefulWidget {
   final String catChar;
   final Color color;
+  final String CatName;
   const HomeSkip({
     super.key,
     required this.color,
     required this.catChar,
+    required this.CatName,
   });
 
   @override
@@ -220,7 +224,7 @@ class _HomeSkipState extends State<HomeSkip> {
             ),
             child: GestureDetector(
               onTap: () {
-                if (widget.catChar == 'A') {
+                if (widget.catChar == 'A' && widget.CatName == 'awareness') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -234,7 +238,8 @@ class _HomeSkipState extends State<HomeSkip> {
                       ),
                     ),
                   );
-                } else if (widget.catChar == 'B') {
+                } else if (widget.catChar == 'B' &&
+                    widget.CatName == 'Breathing') {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -247,7 +252,8 @@ class _HomeSkipState extends State<HomeSkip> {
                           CatChar: 'C',
                         ),
                       ));
-                } else if (widget.catChar == 'C') {
+                } else if (widget.catChar == 'C' &&
+                    widget.CatName == 'Compassion') {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -260,7 +266,8 @@ class _HomeSkipState extends State<HomeSkip> {
                           CatChar: 'F',
                         ),
                       ));
-                } else if (widget.catChar == 'F') {
+                } else if (widget.catChar == 'F' &&
+                    widget.CatName == 'Forgiveness') {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -273,7 +280,8 @@ class _HomeSkipState extends State<HomeSkip> {
                           CatChar: 'G',
                         ),
                       ));
-                } else if (widget.catChar == 'G') {
+                } else if (widget.catChar == 'G' &&
+                    widget.CatName == 'Gratitude') {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -286,7 +294,8 @@ class _HomeSkipState extends State<HomeSkip> {
                           CatChar: 'H',
                         ),
                       ));
-                } else if (widget.catChar == 'H') {
+                } else if (widget.catChar == 'H' &&
+                    widget.CatName == 'Happiness') {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

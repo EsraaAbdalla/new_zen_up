@@ -162,20 +162,20 @@
 //   }
 // }
 
-// ignore_for_file: library_private_types_in_public_api, use_full_hex_values_for_flutter_colors, use_build_context_synchronously, avoid_print, prefer_const_declarations
+// ignore_for_file: library_private_types_in_public_api, use_full_hex_values_for_flutter_colors, use_build_context_synchronously, avoid_print, prefer_const_declarations, override_on_non_overriding_member
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import 'package:new_zen_up/constant.dart';
 import 'package:new_zen_up/home_page.dart';
 import 'package:new_zen_up/play_audio.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:new_zen_up/profile_page.dart';
 import 'package:new_zen_up/random_audio.dart';
 import 'package:new_zen_up/shareed_preferences.dart';
+
+String userName = 'Name';
+String? fetchedpreviousAudio2;
 
 class OriginalPage extends StatefulWidget {
   const OriginalPage({super.key});
@@ -214,13 +214,15 @@ class _OriginalPageState extends State<OriginalPage> {
         final Map<String, dynamic> previousAudioList =
             json.decode(response.body);
         print(previousAudioList);
-        fetchedpreviousAudio = previousAudioList['perviousMixLink'];
+        fetchedpreviousAudio = previousAudioList['mixedAudioPath'];
         print(fetchedpreviousAudio);
+        fetchedpreviousAudio2 =
+            'https://meditation-0gig.onrender.com$fetchedpreviousAudio';
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => AudioPlayerApp(
-              finalMergedAudio: fetchedpreviousAudio!,
+              finalMergedAudio: fetchedpreviousAudio2!,
               listOfAudios: const [],
             ),
           ),
@@ -524,8 +526,59 @@ class _OriginalPageState extends State<OriginalPage> {
   }
 }
 
-class CustomNavBar extends StatelessWidget {
+class CustomNavBar extends StatefulWidget {
   const CustomNavBar({super.key});
+
+  @override
+  State<CustomNavBar> createState() => _CustomNavBarState();
+}
+
+class _CustomNavBarState extends State<CustomNavBar> {
+  @override
+  Future<void> fetchUserName() async {
+    try {
+      final String apiUrl =
+          'https://meditation-0gig.onrender.com/auth/user-name';
+
+      // Retrieve the access token from local storage
+      final String? accessToken = await getTokenFromLocal();
+
+      if (accessToken == null) {
+        print('Access token not found.');
+        // Handle the case where the access token is not available
+        return;
+      }
+
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Parse and use the response as needed
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        String fetchedUserName = responseData['user'];
+        print(fetchedUserName);
+        setState(() {
+          userName = fetchedUserName;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ProfilePage(),
+            ),
+          );
+        });
+      } else {
+        print('Failed to fetch user name. Status code: ${response.statusCode}');
+        // Handle failure, you can check response.body for more details
+      }
+    } catch (error) {
+      print('Error occurred during user name fetch: $error');
+      // Handle other errors
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -544,12 +597,7 @@ class CustomNavBar extends StatelessWidget {
           offset: const Offset(0.0, -30.0),
           child: GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProfilePage(),
-                ),
-              );
+              fetchUserName();
             },
             child: Container(
               width: 100.0,

@@ -1,4 +1,4 @@
-// ignore_for_file: use_full_hex_values_for_flutter_colors, library_private_types_in_public_api
+// ignore_for_file: use_full_hex_values_for_flutter_colors, library_private_types_in_public_api, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
@@ -35,6 +35,7 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
   }
 
   void _loadAudio() async {
+    print(widget.finalMergedAudio);
     AudioSource source = AudioSource.uri(Uri.parse(widget.finalMergedAudio));
     await audioPlayer.setAudioSource(source);
     await audioPlayer.load();
@@ -229,7 +230,10 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        widget.listOfAudios.clear();
+                        if (widget.listOfAudios.isNotEmpty) {
+                          widget.listOfAudios.clear();
+                        }
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(

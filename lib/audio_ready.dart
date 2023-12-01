@@ -61,6 +61,7 @@ class _AudioReadyState extends State<AudioReady> {
 
   @override
   Widget build(BuildContext context) {
+    print(accessToken);
     List<dynamic> audioIds =
         widget.listOfAudios.map((item) => item['_id']).toList();
     print(audioIds);
@@ -126,7 +127,6 @@ class _AudioReadyState extends State<AudioReady> {
                 // Call the mergeAudios function
                 String? mixedAudioPath = await mergeAudios(audioIds);
                 print(mixedAudioPath);
-
                 if (mixedAudioPath != null) {
                   mergeAudio =
                       'https://meditation-0gig.onrender.com${mixedAudioPath}';

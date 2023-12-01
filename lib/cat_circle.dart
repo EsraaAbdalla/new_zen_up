@@ -16,12 +16,12 @@ class CatCircle extends StatefulWidget {
 
 class _CatCircleState extends State<CatCircle> {
   final List<Color> circleColors = [
-    const Color(0xFFFFF3F3F),
-    const Color(0xFFF0DCA91),
-    const Color(0xFFFFFD541),
-    const Color(0xFFFFB6F20),
-    const Color(0xFFF441DFC),
-    const Color(0xFFF9D86FF),
+    const Color(0xFFFFF3F3F), // Default color for A
+    const Color(0xFFF0DCA91), // Default color for B
+    const Color(0xFFFFFD541), // Default color for C
+    const Color(0xFFFFB6F20), // Default color for F
+    const Color(0xFFF441DFC), // Default color for G
+    const Color(0xFFF9D86FF), // Default color for H
   ];
 
   final List<CircleData> circles = [
@@ -30,7 +30,7 @@ class _CatCircleState extends State<CatCircle> {
       page: const HomePage(
         CatName: 'Awareness',
         imageName: 'assets/Group 3160.png',
-        color1: Color(0xFFFFF3F3F),
+        color1: Color(0xFFFFF3F3F), // Special color for Awareness A
         color2: Color(0xFFFFF3F3F),
         CatChar: 'A',
       ),
@@ -42,7 +42,7 @@ class _CatCircleState extends State<CatCircle> {
         CatName: 'Breathing',
         imageName: 'assets/Group 3161.png',
         color1: Color(0xFFF0DCA91),
-        color2: Color(0xFFF0DCA91),
+        color2: Color(0xFFF0DCA91), // Special color for Breathing B
         CatChar: 'B',
       ),
       color: const Color(0xFFF0DCA91),
@@ -109,37 +109,152 @@ class _CatCircleState extends State<CatCircle> {
 
             if (widget.CatName == 'Awareness' && index == 0) {
               isSelected = true;
-            } else if (widget.CatName == 'Breathing' && index == 1) {
+            } else if (widget.CatName == 'Breathing' && index <= 1) {
               isSelected = true;
-            } else if (widget.CatName == 'Compassion' && index == 2) {
+            } else if (widget.CatName == 'Compassion' && index <= 2) {
               isSelected = true;
-            } else if (widget.CatName == 'Forgiveness' && index == 3) {
+            } else if (widget.CatName == 'Forgiveness' && index <= 3) {
               isSelected = true;
-            } else if (widget.CatName == 'Gratitude' && index == 4) {
+            } else if (widget.CatName == 'Gratitude' && index <= 4) {
               isSelected = true;
-            } else if (widget.CatName == 'Happiness' && index == 5) {
+            } else if (widget.CatName == 'Happiness' && index <= 5) {
               isSelected = true;
             }
-            return Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isSelected
-                    ? circleColors[index]
-                    : const Color.fromARGB(255, 221, 219, 219),
-                border: Border.all(
-                  color: isSelected ? Colors.white : const Color(0xFFF166FFF),
-                  width: isSelected ? 2.0 : 0.0,
+            bool isClickable =
+                isSelected && index < 1; // Make A clickable when in B
+// or use: bool isClickable = isSelected && index < 1; // Make A clickable when in B
+
+            if (widget.CatName == 'Compassion' && index < 2) {
+              isClickable = isSelected; // Make A and B clickable when in C
+            } else if (widget.CatName == 'Forgiveness' && index < 3) {
+              isClickable = isSelected; // Make A, B, and C clickable when in F
+            } else if (widget.CatName == 'Gratitude' && index < 4) {
+              isClickable =
+                  isSelected; // Make A, B, C and F clickable when in G
+            } else if (widget.CatName == 'Happiness' && index < 5) {
+              isClickable =
+                  isSelected; // Make A, B, C and F clickable when in G
+            }
+
+// Add similar conditions for other categories as needed
+
+            return GestureDetector(
+              onTap: isClickable
+                  ? () {
+                      // Add your onTap logic here
+                      if (index == 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                    CatName: 'Awareness',
+                                    imageName: 'assets/Group 3160.png',
+                                    color1: Color(
+                                        0xFFFFF3F3F), // Special color for Awareness A
+                                    color2: Color(0xFFFFF3F3F),
+                                    CatChar: 'A',
+                                  )),
+                        );
+                      } else if (index == 1) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage(
+                                      CatName: 'Breathing',
+                                      imageName: 'assets/Group 3161.png',
+                                      color1: Color(0xFFF0DCA91),
+                                      color2: Color(
+                                          0xFFF0DCA91), // Special color for Breathing B
+                                      CatChar: 'B',
+                                    )));
+                      } else if (index == 2) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomePage(
+                                      CatName: 'Compassion',
+                                      imageName: 'assets/Group 3162.png',
+                                      color1: Color(0xFFFFFD541),
+                                      color2: Color(0xFFFFFD541),
+                                      CatChar: 'C',
+                                    )));
+                      } else if (index == 3) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                CatName: 'Forgiveness',
+                                imageName: 'assets/Group 3163.png',
+                                color1: Color(0xFFFFB6F20),
+                                color2: Color(0xFFFFB6F20),
+                                CatChar: 'F',
+                              ),
+                            ));
+                      } else if (index == 4) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                CatName: 'Gratitude',
+                                imageName: 'assets/Group 3164.png',
+                                color1: Color(0xFFF441DFC),
+                                color2: Color(0xFFF441DFC),
+                                CatChar: 'G',
+                              ),
+                            ));
+                      } else if (index == 5) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                CatName: 'Happiness',
+                                imageName: 'assets/Group 3165.png',
+                                color1: Color(0xFFF9D86FF),
+                                color2: Color(0xFFF9D86FF),
+                                CatChar: 'H',
+                              ),
+                            ));
+                      }
+                    }
+                  : null,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isSelected
+                      ? (index == 0 && widget.CatName == 'Awareness')
+                          ? circleColors[0] // Special color for Awareness A
+                          : (index == 1 && widget.CatName == 'Breathing')
+                              ? circleColors[1] // Special color for Breathing B
+                              : (index == 2 && widget.CatName == 'Compassion')
+                                  ? circleColors[2]
+                                  : (index == 3 &&
+                                          widget.CatName == 'Forgiveness')
+                                      ? circleColors[3]
+                                      : (index == 4 &&
+                                              widget.CatName == 'Gratitude')
+                                          ? circleColors[4]
+                                          : (index == 5 &&
+                                                  widget.CatName == 'Happiness')
+                                              ? circleColors[
+                                                  5] // Special color for Compassion C
+                                              : Colors
+                                                  .green // Default color for other selected circles
+                      : const Color.fromARGB(255, 221, 219, 219),
+                  border: Border.all(
+                    color: isSelected ? Colors.white : const Color(0xFFF166FFF),
+                    width: isSelected ? 2.0 : 0.0,
+                  ),
                 ),
-              ),
-              width: 50,
-              height: 50,
-              child: Center(
-                child: Text(
-                  circle.character,
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: isSelected ? Colors.white : Colors.black,
-                    fontWeight: FontWeight.w600,
+                width: 50,
+                height: 50,
+                child: Center(
+                  child: Text(
+                    circle.character,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: isSelected ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

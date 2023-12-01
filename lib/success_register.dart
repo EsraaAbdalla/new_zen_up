@@ -6,6 +6,8 @@ import 'package:new_zen_up/original_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:new_zen_up/shareed_preferences.dart';
 
+String userName = 'Loading...'; // Initial value while fetching
+
 class SuccessRegister extends StatefulWidget {
   const SuccessRegister({super.key});
 
@@ -14,8 +16,6 @@ class SuccessRegister extends StatefulWidget {
 }
 
 class _SuccessRegisterState extends State<SuccessRegister> {
-  String userName = 'Loading...'; // Initial value while fetching
-
   Future<void> fetchUserName() async {
     try {
       final String apiUrl =

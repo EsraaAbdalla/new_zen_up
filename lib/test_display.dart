@@ -178,10 +178,9 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:new_zen_up/accordion_page.dart';
 import 'package:new_zen_up/audio_ready.dart';
-// import 'package:new_zen_up/cat_circle.dart';
 import 'package:new_zen_up/home_page.dart';
-
 import 'dart:convert';
 import 'package:new_zen_up/rec_name.dart';
 
@@ -189,6 +188,7 @@ List<Map<String, dynamic>> selectedAudios = [];
 
 class AudioListPage extends StatefulWidget {
   final String RecName;
+  final String CatName;
   Color color1;
   Color color2;
 
@@ -196,7 +196,8 @@ class AudioListPage extends StatefulWidget {
       {super.key,
       required this.RecName,
       required this.color1,
-      required this.color2});
+      required this.color2,
+      required this.CatName});
   @override
   _AudioListPageState createState() => _AudioListPageState();
 }
@@ -231,6 +232,19 @@ class _AudioListPageState extends State<AudioListPage> {
     super.initState();
     // Load your audio URL here
   }
+
+  // void updateSelectedAudios(Map<String, dynamic> audio) {
+  //   int index = selectedAudios
+  //       .indexWhere((item) => item['categoryName'] == audio['categoryName']);
+
+  //   if (index != -1) {
+  //     // If an audio with the same category name exists, replace it
+  //     selectedAudios[index] = audio;
+  //   } else {
+  //     // If no audio with the same category name exists, add the new object
+  //     selectedAudios.add(audio);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -285,8 +299,20 @@ class _AudioListPageState extends State<AudioListPage> {
                       const EdgeInsets.only(bottom: 10, left: 20, right: 20),
                   child: InkWell(
                     onTap: () {
-                      bool userAlreadyChoseCategory = false;
+                      setState(() {
+                        // selectedRows[categoryName] = value as int?;
+                        YourObject newCategoryObject = YourObject(
+                          categoryName: audio['categoryName'],
+                          id: audio['_id'],
+                          AudioName: audioName,
+                        );
+                        updatedList = updateListWithCategory(
+                          newCategoryObject,
+                          selectedAudios,
+                        );
 
+                        // print(updatedList);
+                      });
                       // for (Item item in selectedAudios) {
                       //   if (item.catName == audio['categoryName']) {
                       //     userAlreadyChoseCategory = true;
@@ -312,12 +338,13 @@ class _AudioListPageState extends State<AudioListPage> {
                       ///ADD 💖💖💖💖
                       if (selectedAudios.isEmpty) {
                         // If the list is empty, add the ID directly
-                        selectedAudios.add({
-                          "_id": audio['_id'],
-                          "name": audio['name'],
-                          "categoryName": audio['categoryName']
-                        });
-                        if (selectedAudios.length == 1) {
+                        // selectedAudios.add({
+                        //   "_id": audio['_id'],
+                        //   "name": audio['name'],
+                        //   "categoryName": audio['categoryName']
+                        // });
+                        print(selectedAudios);
+                        if (widget.CatName == 'Awareness') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -329,7 +356,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                   CatChar: 'B',
                                 ),
                               ));
-                        } else if (selectedAudios.length == 2) {
+                        } else if (widget.CatName == 'Breathing') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -341,7 +368,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                   CatChar: 'C',
                                 ),
                               ));
-                        } else if (selectedAudios.length == 3) {
+                        } else if (widget.CatName == 'Compassion') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -353,7 +380,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                   CatChar: 'F',
                                 ),
                               ));
-                        } else if (selectedAudios.length == 4) {
+                        } else if (widget.CatName == 'Forgiveness') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -365,7 +392,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                   CatChar: 'G',
                                 ),
                               ));
-                        } else if (selectedAudios.length == 5) {
+                        } else if (widget.CatName == 'Gratitude') {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -389,12 +416,12 @@ class _AudioListPageState extends State<AudioListPage> {
                         }
                         if (!idExists) {
                           // If the ID is not in the list, add it
-                          selectedAudios.add({
-                            "_id": audio['_id'],
-                            "name": audio['name'],
-                            "categoryName": audio['categoryName']
-                          });
-                          if (selectedAudios.length == 1) {
+                          // selectedAudios.add({
+                          //   "_id": audio['_id'],
+                          //   "name": audio['name'],
+                          //   "categoryName": audio['categoryName']
+                          // });
+                          if (widget.CatName == 'Awareness') {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -406,7 +433,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                     CatChar: 'B',
                                   ),
                                 ));
-                          } else if (selectedAudios.length == 2) {
+                          } else if (widget.CatName == 'Breathing') {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -418,7 +445,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                     CatChar: 'C',
                                   ),
                                 ));
-                          } else if (selectedAudios.length == 3) {
+                          } else if (widget.CatName == 'Compassion') {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -430,7 +457,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                     CatChar: 'F',
                                   ),
                                 ));
-                          } else if (selectedAudios.length == 4) {
+                          } else if (widget.CatName == 'Forgiveness') {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -442,7 +469,7 @@ class _AudioListPageState extends State<AudioListPage> {
                                     CatChar: 'G',
                                   ),
                                 ));
-                          } else if (selectedAudios.length == 5) {
+                          } else if (widget.CatName == 'Gratitude') {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -530,4 +557,11 @@ class Item {
 class audioIds {
   late String CatName;
   late String id;
+}
+
+class SelectedAudio {
+  String categoryName;
+  String audioId;
+
+  SelectedAudio({required this.categoryName, required this.audioId});
 }
