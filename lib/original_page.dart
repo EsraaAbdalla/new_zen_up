@@ -249,7 +249,7 @@ class _OriginalPageState extends State<OriginalPage> {
             Stack(
               children: [
                 Image.asset(
-                  'assets/home.png',
+                  'assets/editHome.png',
                   fit: BoxFit.fill,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.45,

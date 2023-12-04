@@ -2,23 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_zen_up/Cubit/login_state.dart';
+
 import 'package:new_zen_up/accordion_page.dart';
 import 'package:new_zen_up/play_audio.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:new_zen_up/shareed_preferences.dart';
 
 var id;
 String? mergeAudio;
 
 Future<String?> mergeAudios(List<dynamic> audioIds) async {
+  String? accessToken = await getTokenFromLocal();
+
   final String apiUrl = 'https://meditation-0gig.onrender.com/mergeAudios';
   final Map<String, String> headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer $accessToken'
+    'Authorization': 'Bearer ${accessToken}'
   };
   final Map<String, dynamic> body = {'audioIds': audioIds};
-
+  print(headers);
   try {
     final response = await http.post(
       Uri.parse(apiUrl),

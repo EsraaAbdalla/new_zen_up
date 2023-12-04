@@ -224,7 +224,7 @@ class _HomeSkipState extends State<HomeSkip> {
             ),
             child: GestureDetector(
               onTap: () {
-                if (widget.catChar == 'A' && widget.CatName == 'awareness') {
+                if (widget.catChar == 'A' && widget.CatName == 'Awareness') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -233,7 +233,6 @@ class _HomeSkipState extends State<HomeSkip> {
                         imageName: 'assets/Group 3161.png',
                         color1: Color(0xFFF0DCA91),
                         color2: Color(0xFFF0DCA91),
-                        // audioBloc: AudioBloc(),
                         CatChar: 'B',
                       ),
                     ),
@@ -248,7 +247,6 @@ class _HomeSkipState extends State<HomeSkip> {
                           imageName: 'assets/Group 3162.png',
                           color1: Color(0xFFFFFD541),
                           color2: Color(0xFFFFFD541),
-                          //   audioBloc: AudioBloc(),
                           CatChar: 'C',
                         ),
                       ));
@@ -262,7 +260,6 @@ class _HomeSkipState extends State<HomeSkip> {
                           imageName: 'assets/Group 3163.png',
                           color1: Color(0xFFFFB6F20),
                           color2: Color(0xFFFFB6F20),
-                          //   audioBloc: AudioBloc(),
                           CatChar: 'F',
                         ),
                       ));
@@ -276,7 +273,6 @@ class _HomeSkipState extends State<HomeSkip> {
                           imageName: 'assets/Group 3164.png',
                           color1: Color(0xFFF441DFC),
                           color2: Color(0xFFF441DFC),
-                          // audioBloc: AudioBloc(),
                           CatChar: 'G',
                         ),
                       ));
@@ -290,18 +286,34 @@ class _HomeSkipState extends State<HomeSkip> {
                           imageName: 'assets/Group 3165.png',
                           color1: Color(0xFFF9D86FF),
                           color2: Color(0xFFF9D86FF),
-                          // audioBloc: AudioBloc(),
                           CatChar: 'H',
                         ),
                       ));
                 } else if (widget.catChar == 'H' &&
                     widget.CatName == 'Happiness') {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AudioReady(
-                                listOfAudios: [],
-                              )));
+                  if (selectedAudios.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Error'),
+                        content:
+                            const Text('You Must Select at Least One Audio'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AudioReady(
+                                  listOfAudios: [],
+                                )));
+                  }
                 }
               },
               child: Container(
