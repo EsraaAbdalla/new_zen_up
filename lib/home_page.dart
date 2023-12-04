@@ -310,8 +310,8 @@ class _HomeSkipState extends State<HomeSkip> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AudioReady(
-                                  listOfAudios: [],
+                            builder: (context) => AudioReady(
+                                  listOfAudios: selectedAudios,
                                 )));
                   }
                 }
