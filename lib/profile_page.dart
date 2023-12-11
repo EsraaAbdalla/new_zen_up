@@ -84,28 +84,28 @@ class _ProfilePageState extends State<ProfilePage> {
                   ]),
               child: Column(
                 children: [
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor:
-                          const Color(0XFFF0601B4).withOpacity(0.05),
-                      child: const Icon(
-                        Icons.favorite,
-                        color: Color(0XFFFC150F6),
-                      ), // Background color of the CircleAvatar
-                    ),
-                    title: const Text(
-                      'My Favorite',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                    subtitle: const Text('Go to your favorite mixed audios',
-                        style: TextStyle(color: Color(0XFFFABABAB))),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded,
-                        color: Color(0XFFFABABAB)),
-                    onTap: () {
-                      // Handle the onTap event for Item 1
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: CircleAvatar(
+                  //     backgroundColor:
+                  //         const Color(0XFFF0601B4).withOpacity(0.05),
+                  //     child: const Icon(
+                  //       Icons.favorite,
+                  //       color: Color(0XFFFC150F6),
+                  //     ), // Background color of the CircleAvatar
+                  //   ),
+                  //   title: const Text(
+                  //     'My Favorite',
+                  //     style:
+                  //         TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  //   ),
+                  //   subtitle: const Text('Go to your favorite mixed audios',
+                  //       style: TextStyle(color: Color(0XFFFABABAB))),
+                  //   trailing: const Icon(Icons.arrow_forward_ios_rounded,
+                  //       color: Color(0XFFFABABAB)),
+                  //   onTap: () {
+                  //     // Handle the onTap event for Item 1
+                  //   },
+                  // ),
                   const SizedBox(
                     height: 25,
                   ),

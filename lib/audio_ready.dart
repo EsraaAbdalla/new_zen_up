@@ -1,8 +1,6 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_typing_uninitialized_variables, prefer_const_declarations, avoid_print, unnecessary_brace_in_string_interps, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:new_zen_up/Cubit/login_state.dart';
-
 import 'package:new_zen_up/accordion_page.dart';
 import 'package:new_zen_up/play_audio.dart';
 import 'dart:convert';
@@ -48,23 +46,46 @@ Future<String?> mergeAudios(List<dynamic> audioIds) async {
 class AudioReady extends StatefulWidget {
   const AudioReady({Key? key, required this.listOfAudios}) : super(key: key);
   final List<Map<String, dynamic>> listOfAudios;
+
   @override
   State<AudioReady> createState() => _AudioReadyState();
 }
 
 class _AudioReadyState extends State<AudioReady> {
-  // final List<String> dataList = [
-  //   '1-Wake Up Now',
-  //   '2-This Time Up',
-  //   '3-Let’s Start',
-  //   '4-Welcome Back',
-  //   '5-Relax',
-  //   '6-Now Or Never',
-  // ];
-
+  static const List<String> categoryNames = [
+    'awareness',
+    'breathing',
+    'compassion',
+    'forgiveness',
+    'gratitude',
+    'happiness',
+  ];
   @override
   Widget build(BuildContext context) {
-    print(accessToken);
+    Color getColorFromCharacter(String character) {
+      // Use a switch or if-else statements to map characters to colors
+      switch (character.toUpperCase()) {
+        case 'A':
+          return const Color(0XFFFFF3B3B);
+        case 'B':
+          return const Color(0XFFF0DCA91);
+        // Add more cases as needed
+        case 'C':
+          return const Color(0XFFFFFD541);
+        case 'F':
+          return const Color(0XFFFFB6F20);
+        case 'G':
+          return const Color(0XFFF441DFC);
+        case 'H':
+          return const Color(0XFFF9D86FF);
+
+        default:
+          return Colors.purpleAccent;
+      }
+    }
+
+    print(widget.listOfAudios);
+
     List<dynamic> audioIds =
         widget.listOfAudios.map((item) => item['_id']).toList();
     print(audioIds);
@@ -94,15 +115,37 @@ class _AudioReadyState extends State<AudioReady> {
         Column(
           children: widget.listOfAudios.map((item) {
             final name = item["name"];
+            final length = item["length"];
             id = item["_id"];
+            final catName = item['categoryName'];
+            final avatarBackgroundColor = getColorFromCharacter(catName![0]);
             return Column(
               children: [
                 ListTile(
-                  title: Text(
-                    name ?? '',
-                    style: const TextStyle(color: Color(0XFFFB6B4C2)),
-                  ),
-                ),
+                    leading: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: avatarBackgroundColor,
+                      child: Text(
+                        catName?.substring(0, 1).toString().toUpperCase() ??
+                            '', // Display the first character of categoryName
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    title: Text(
+                      name ?? '',
+                      style: TextStyle(
+                          color: const Color(0XFFFB6B4C2),
+                          fontSize: MediaQuery.of(context).size.width * 0.04,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    trailing: Text(
+                      '${length.toString()} min',
+                      style: TextStyle(
+                        color: const Color(0XFFFB6B4C2),
+                        fontSize: MediaQuery.of(context).size.width * 0.04,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )),
               ],
             );
           }).toList(),
@@ -128,6 +171,9 @@ class _AudioReadyState extends State<AudioReady> {
                 // Assuming you have a list of audioIds, replace it with your actual audioIds
                 // await mergeAudios(audioIds);
                 // Call the mergeAudios function
+                audioIds =
+                    audioIds.where((element) => element != null).toList();
+
                 String? mixedAudioPath = await mergeAudios(audioIds);
                 print(mixedAudioPath);
                 if (mixedAudioPath != null) {
@@ -226,5 +272,30 @@ class _AudioReadyState extends State<AudioReady> {
         )
       ],
     ));
+  }
+}
+
+class MyApp extends StatelessWidget {
+  final List<String> expectedCategories = ['A', 'B', 'C', 'F', 'G', 'H'];
+  // final List<String> categoryTitles = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: ListView.builder(
+          itemCount: expectedCategories.length,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              leading: CircleAvatar(
+                child: Text(expectedCategories[index]),
+              ),
+              // title: Text(categoryTitles[index]),
+              // Add more ListTile properties as needed
+            );
+          },
+        ),
+      ),
+    );
   }
 }

@@ -14,12 +14,21 @@ class YourObject {
   String categoryName;
   String id;
   String AudioName;
+  dynamic mint;
 
   YourObject(
-      {required this.categoryName, required this.id, required this.AudioName});
+      {required this.categoryName,
+      required this.id,
+      required this.AudioName,
+      required this.mint});
 
   Map<String, dynamic> toJson() {
-    return {'categoryName': categoryName, '_id': id, 'name': AudioName};
+    return {
+      'categoryName': categoryName,
+      '_id': id,
+      'name': AudioName,
+      'length': mint
+    };
   }
 }
 
@@ -301,7 +310,9 @@ class _MyDataTableState extends State<MyDataTable> {
               data.length,
               (index) {
                 final item = data[index];
+
                 final ID = item['_id'];
+                final min = item['length'];
                 final categoryName = item['categoryName'];
                 final audioName = item['name'].toString();
                 final isSelected = widget.selected.any((selectedItem) =>
@@ -336,6 +347,7 @@ class _MyDataTableState extends State<MyDataTable> {
                               categoryName: categoryName,
                               id: ID,
                               AudioName: audioName,
+                              mint: min,
                             );
                             updatedList = updateListWithCategory(
                               newCategoryObject,

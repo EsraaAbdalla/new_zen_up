@@ -95,7 +95,10 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
                         color: Color(0XFFFE6E7F2),
                         size: 45,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        audioPlayer
+                            .seek(Duration(seconds: _position.toInt() - 10));
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -138,6 +141,8 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
                           size: 45,
                         ),
                         onPressed: () {
+                          audioPlayer
+                              .seek(Duration(seconds: _position.toInt() + 10));
                           // Implement your forward button logic here
                         },
                       ),
@@ -168,51 +173,6 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
                     );
                   },
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 90, left: 15, right: 15),
-                //   child: Container(
-                //     height: 65,
-                //     decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(99),
-                //       color: Colors.white,
-                //       boxShadow: const [
-                //         BoxShadow(
-                //           color: Colors.grey,
-                //           offset: Offset(0, 3),
-                //           blurRadius: 5,
-                //         ),
-                //       ],
-                //     ),
-                //     child: TextButton(
-                //       onPressed: () {
-                //         // Add your button action here
-                //       },
-                //       child: Center(
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.center,
-                //           children: const [
-                //             Text(
-                //               'Go To Favorite List',
-                //               style: TextStyle(
-                //                   color: Colors.purpleAccent,
-                //                   fontSize: 20,
-                //                   fontWeight: FontWeight.w700,
-                //                   fontFamily: 'Poppins'),
-                //             ),
-                //             SizedBox(
-                //               width: 10,
-                //             ),
-                //             Icon(
-                //               Icons.arrow_forward_ios_rounded,
-                //               color: Colors.purpleAccent,
-                //               size: 20,
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
                   child: Container(

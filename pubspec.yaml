@@ -35,7 +35,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-
   curved_navigation_bar: ^1.0.3
   curved_nav_bar: ^0.0.2
   circle_nav_bar: ^2.0.1+1
@@ -58,10 +57,19 @@ dependencies:
   audioplayers: ^4.1.0
   uni_links: ^0.5.1
   shared_preferences: ^2.2.2
+ 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1  
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/Zen Up.png"
+  adaptive_icon_foreground: "assets/play_store_512.png"
+  remove_alpha_ios: true
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -121,6 +129,7 @@ flutter:
     - assets/9.png
     - assets/10.png
     - assets/editHome.png
+    - assets/play_store_512.png
       
 
   # An image asset can refer to one or more resolution-specific "variants", see

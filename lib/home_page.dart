@@ -91,22 +91,12 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     showCategoryDialog(widget.CatName.toLowerCase());
                   },
-                  child: Align(
+                  child: const Align(
                     alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color:
-                              Colors.white, // Adjust the border color as needed
-                          width: 2.0, // Adjust the border width as needed
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.question_mark_rounded,
-                        color: Colors.white,
-                        size: 25,
-                      ),
+                    child: Icon(
+                      Icons.info_outline,
+                      color: Colors.white,
+                      size: 30,
                     ),
                   ),
                 ),
@@ -197,9 +187,11 @@ class _HomeSkipState extends State<HomeSkip> {
                       bottomLeft: Radius.circular(40),
                       topLeft: Radius.circular(40))),
               child: Row(
-                children: const [
+                children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 30, right: 15),
+                    padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.07,
+                        right: MediaQuery.of(context).size.width * 0.02),
                     child: Icon(
                       Icons.arrow_back_ios,
                       color: Color(0xFFF166FFF),
@@ -210,7 +202,7 @@ class _HomeSkipState extends State<HomeSkip> {
                       'Home',
                       style: TextStyle(
                           color: Color(0xFFF166FFF),
-                          fontSize: 18,
+                          fontSize: MediaQuery.of(context).size.width * 0.05,
                           fontWeight: FontWeight.bold),
                     ),
                   )
@@ -225,6 +217,11 @@ class _HomeSkipState extends State<HomeSkip> {
             child: GestureDetector(
               onTap: () {
                 if (widget.catChar == 'A' && widget.CatName == 'Awareness') {
+                  selectedAudios.add({
+                    'categoryName': widget.CatName,
+                    'name': 'Skipped',
+                    'length': 0
+                  });
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -239,6 +236,11 @@ class _HomeSkipState extends State<HomeSkip> {
                   );
                 } else if (widget.catChar == 'B' &&
                     widget.CatName == 'Breathing') {
+                  selectedAudios.add({
+                    'categoryName': widget.CatName,
+                    'name': 'Skipped',
+                    'length': 0
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -252,6 +254,11 @@ class _HomeSkipState extends State<HomeSkip> {
                       ));
                 } else if (widget.catChar == 'C' &&
                     widget.CatName == 'Compassion') {
+                  selectedAudios.add({
+                    'categoryName': widget.CatName,
+                    'name': 'Skipped',
+                    'length': 0
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -265,6 +272,11 @@ class _HomeSkipState extends State<HomeSkip> {
                       ));
                 } else if (widget.catChar == 'F' &&
                     widget.CatName == 'Forgiveness') {
+                  selectedAudios.add({
+                    'categoryName': widget.CatName,
+                    'name': 'Skipped',
+                    'length': 0
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -278,6 +290,11 @@ class _HomeSkipState extends State<HomeSkip> {
                       ));
                 } else if (widget.catChar == 'G' &&
                     widget.CatName == 'Gratitude') {
+                  selectedAudios.add({
+                    'categoryName': widget.CatName,
+                    'name': 'Skipped',
+                    'length': 0
+                  });
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -291,6 +308,11 @@ class _HomeSkipState extends State<HomeSkip> {
                       ));
                 } else if (widget.catChar == 'H' &&
                     widget.CatName == 'Happiness') {
+                  selectedAudios.add({
+                    'categoryName': widget.CatName,
+                    'name': 'Skipped',
+                    'length': 0
+                  });
                   if (selectedAudios.isEmpty) {
                     showDialog(
                       context: context,
@@ -329,18 +351,23 @@ class _HomeSkipState extends State<HomeSkip> {
                   children: [
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 30, right: 5),
+                        padding: const EdgeInsets.only(
+                          left: 30,
+                        ),
                         child: Text(
                           'Skip ${widget.catChar}',
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Color(0xFFF166FFF),
-                              fontSize: 18,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.05,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.07,
+                          left: MediaQuery.of(context).size.width * 0.02),
                       child: Icon(
                         Icons.arrow_forward_ios,
                         color: Color(0xFFF166FFF),

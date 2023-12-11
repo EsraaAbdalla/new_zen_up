@@ -32,6 +32,8 @@ class LoginBloc extends Cubit<LoginState> {
         saveTokenToLocal(accessToken!);
         print(accessToken);
       } else {
+        print(response.statusCode);
+        print(response.body);
         emit(LoginFailure('Invalid credentials'));
         print('Invalid credentials');
       }

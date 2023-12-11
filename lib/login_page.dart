@@ -130,9 +130,6 @@ class LoginPage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => ForgotPasswordPage()),
                   );
-                  // final email = emailController.text;
-                  // final password = passwordController.text;
-                  // loginBloc.login(email, password);
                 },
               ),
               const SizedBox(

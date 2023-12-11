@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
+String? error;
+
 class SignUpBloc extends Cubit<SignUpState> {
   SignUpBloc() : super(SignUpInitial());
 
@@ -32,7 +34,12 @@ class SignUpBloc extends Cubit<SignUpState> {
         emit(SignUpSuccess());
         print('signUpSuccess');
       } else {
-        emit(SignUpFailure('Sign-up failed'));
+        print(response.statusCode);
+        print(response.body);
+        Map<String, dynamic> ErrorMess = jsonDecode(response.body);
+
+        error = ErrorMess['message'];
+        emit(SignUpFailure('Sign-up failed : \n $error'));
       }
     } catch (e) {
       print(e);

@@ -86,6 +86,7 @@ class ForgotPasswordBloc
 //         saveTokenToLocal(token);
 //         // print(response.body);
       } else {
+        print(response.body);
         final error = json.decode(response.body)['error'] as String;
         emit(ForgotPasswordFailure(error));
       }

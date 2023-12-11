@@ -96,12 +96,12 @@ class _RecordNumState extends State<RecordNum> {
               ),
             ),
           ),
-          IconButton(
-            icon: widget.icon,
-            onPressed: () {
-              widget.onTapFunction(); // Call the provided function
-            },
-          ),
+          // IconButton(
+          //   icon: widget.icon,
+          //   onPressed: () {
+          //     widget.onTapFunction(); // Call the provided function
+          //   },
+          // ),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -123,9 +123,9 @@ class _RecordNumState extends State<RecordNum> {
                 );
               },
               icon: const Icon(
-                Icons.question_mark_rounded,
+                Icons.info_outline,
                 color: Colors.white,
-                size: 20,
+                size: 25,
               ))
         ],
       ),

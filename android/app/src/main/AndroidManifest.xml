@@ -2,7 +2,7 @@
     package="com.example.new_zen_up">
      <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="new_zen_up"
+        android:label="ZenUp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

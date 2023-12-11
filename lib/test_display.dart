@@ -1,180 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:new_zen_up/Cubit/audios_cat.dart';
-// import 'package:new_zen_up/rec_name.dart';
-
-// class AudioPage extends StatefulWidget {
-//   @override
-//   _AudioPageState createState() => _AudioPageState();
-// }
-
-// class _AudioPageState extends State<AudioPage> {
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     // Access the AudioBloc using context.read
-//     final audioBloc = context.read<AudioBloc>();
-
-//     // Call getAudiosByCategory to fetch audio data
-//     audioBloc.getAudiosByCategory('awareness');
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Audio List'),
-//       ),
-//       body: BlocBuilder<AudioBloc, List<AudioData>>(
-//         builder: (context, audioDataList) {
-//           if (audioDataList.isEmpty) {
-//             return Center(
-//               child:
-//                   CircularProgressIndicator(), // Display a loading indicator while fetching data.
-//             );
-//           } else {
-//             return ListView.builder(
-//               itemCount: audioDataList.length,
-//               itemBuilder: (context, index) {
-//                 final audioData = audioDataList[index];
-//                 return RecordNum(
-//                   color1: Colors.lightBlue, RecName: audioData.name,
-//                   color2: Colors.blue, number: audioData.length.toString(),
-
-//                   // You can add more UI components to display audio data as needed.
-//                 );
-//               },
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-//##################################
-// ignore_for_file: non_constant_identifier_names, library_private_types_in_public_api, avoid_print, must_be_immutable, prefer_const_declarations, use_full_hex_values_for_flutter_colors, unused_local_variable, camel_case_types
-
-// import 'package:audioplayers/audioplayers.dart';
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-
-// import 'dart:convert';
-// import 'package:new_zen_up/rec_name.dart';
-
-// class AudioListPage extends StatefulWidget {
-//   final String RecName;
-//   Color color1;
-//   Color color2;
-
-//   AudioListPage(
-//       {super.key,
-//       required this.RecName,
-//       required this.color1,
-//       required this.color2});
-//   @override
-//   _AudioListPageState createState() => _AudioListPageState();
-// }
-
-// class _AudioListPageState extends State<AudioListPage> {
-
-//   AudioPlayer audioPlayer = AudioPlayer();
-//   List<String> selectedAudios = [];
-
-//   void playAudio(String audioPath) async {
-//     await audioPlayer.play(UrlSource(audioPath));
-//   }
-
-//   Future<Map<String, dynamic>> fetchAudiosByCategory(
-//       String categoryName) async {
-//     final String baseUrl = 'https://meditation-0gig.onrender.com';
-//     final response =
-//         await http.get(Uri.parse('$baseUrl/getAudiosByCat/$categoryName'));
-//     // final response = await http.get(
-//     //     Uri.parse("https://meditation-0gig.onrender.com/getAudiosByCat/awareness"));
-
-//     if (response.statusCode == 200) {
-//       return json.decode(response.body);
-//     } else {
-//       throw Exception('Failed to load data from the API');
-//     }
-//   }
-
-//   IconData iconData = Icons.play_arrow; // Initial icon (play)
-//   bool isPlaying = false;
-//    int selectedAudioIndex = -1;
-//   Future<void> toggleAudioPlayback() async {
-//     if (isPlaying) {
-//       await audioPlayer.pause();
-//       setState(() {
-//         isPlaying = false;
-//         iconData = Icons.play_arrow; // Change the icon to play
-//       });
-//     } else {
-//       // await audioPlayer.play();
-//       setState(() {
-//         isPlaying = true;
-//         iconData = Icons.pause; // Change the icon to pause
-//       });
-//     }
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Load your audio URL here
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: FutureBuilder<Map<String, dynamic>>(
-//         future: fetchAudiosByCategory(widget.RecName),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return const Center(child: CircularProgressIndicator());
-//           } else if (snapshot.hasError) {
-//             return Center(child: Text('Error: ${snapshot.error}'));
-//           } else {
-//             final audioList = snapshot.data;
-//             print(audioList!['Audios'][0]['path']);
-//             print(snapshot);
-//             return ListView.builder(
-//               itemCount: audioList!['Audios'].length,
-//               itemBuilder: (context, index) {
-//                 final audio = audioList['Audios'][index];
-//                 return Padding(
-//                   padding:
-//                       const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-//                   child: InkWell(
-//                     // onTap: () {
-//                     //   playAudio(audio['path']);
-//                     // },
-//                     child: RecordNum(
-//                       RecName: audio['name'],
-//                       color1: widget.color1,
-//                       color2: widget.color2,
-//                       number: audio['length'].toString(),
-//                       onTapFunction: () {
-//                         toggleAudioPlayback();
-//                         playAudio(audioList['Audios'][index]['path']);
-//                       },
-//                       icon: Icon(
-//                         iconData,
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                   ),
-//                 );
-//               },
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -233,19 +56,6 @@ class _AudioListPageState extends State<AudioListPage> {
     // Load your audio URL here
   }
 
-  // void updateSelectedAudios(Map<String, dynamic> audio) {
-  //   int index = selectedAudios
-  //       .indexWhere((item) => item['categoryName'] == audio['categoryName']);
-
-  //   if (index != -1) {
-  //     // If an audio with the same category name exists, replace it
-  //     selectedAudios[index] = audio;
-  //   } else {
-  //     // If no audio with the same category name exists, add the new object
-  //     selectedAudios.add(audio);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -290,6 +100,7 @@ class _AudioListPageState extends State<AudioListPage> {
                 final audio = audioList['Audios'][index];
                 final audioName = audio['name'];
                 final audioDes = audio['description'];
+                // final length = audio['length'];
 
                 // Check if the current audio is selected
                 final isSelected = selectedAudioIndex == index;
@@ -305,44 +116,16 @@ class _AudioListPageState extends State<AudioListPage> {
                           categoryName: audio['categoryName'],
                           id: audio['_id'],
                           AudioName: audioName,
+                          mint: audio['length'],
                         );
                         updatedList = updateListWithCategory(
                           newCategoryObject,
                           selectedAudios,
                         );
-
-                        // print(updatedList);
                       });
-                      // for (Item item in selectedAudios) {
-                      //   if (item.catName == audio['categoryName']) {
-                      //     userAlreadyChoseCategory = true;
-                      //     break; // Exit the loop if a matching category is found
-                      //   }
-                      // }
-
-                      // if (!userAlreadyChoseCategory) {
-                      //   // If the user hasn't chosen an item from the same category, add the ID
-                      //   selectedAudios
-                      //       .add(Item(audio['_id'], audio['categoryName']));
-                      //   for (Item item in selectedAudios) {
-                      //     print(item.runtimeType);
-                      //   }
-                      // }
-
-                      // for (Item item in selectedAudios) {
-                      //   //  print("ID: ${item.id}, Category: ${item.catName}");
-                      //   // print(item.id);
-                      // }
-
                       ////////////////////////////////////////////////////////////////////
                       ///ADD 💖💖💖💖
                       if (selectedAudios.isEmpty) {
-                        // If the list is empty, add the ID directly
-                        // selectedAudios.add({
-                        //   "_id": audio['_id'],
-                        //   "name": audio['name'],
-                        //   "categoryName": audio['categoryName']
-                        // });
                         print(selectedAudios);
                         if (widget.CatName == 'Awareness') {
                           Navigator.push(
@@ -415,12 +198,6 @@ class _AudioListPageState extends State<AudioListPage> {
                           }
                         }
                         if (!idExists) {
-                          // If the ID is not in the list, add it
-                          // selectedAudios.add({
-                          //   "_id": audio['_id'],
-                          //   "name": audio['name'],
-                          //   "categoryName": audio['categoryName']
-                          // });
                           if (widget.CatName == 'Awareness') {
                             Navigator.push(
                                 context,
@@ -494,33 +271,6 @@ class _AudioListPageState extends State<AudioListPage> {
                       }
                       print(selectedAudios);
                       //💖💖💖💖💖💖💖💖💖💖
-                      //////////////////////////////////////////////////////////////////
-                      //.........................
-                      // if (selectedAudios.isEmpty) {
-                      //   print("list is empty");
-                      //   audioIds().CatName = audio['name'];
-                      //   audioIds().id = audio['_id'];
-                      //   print(audioIds());
-                      //   selectedAudios.add(audioIds());
-                      // } else if (selectedAudios.length != 0) {
-                      //   print("list is not empty");
-
-                      //   for (int i = 0; i < selectedAudios.length; i++) {
-                      //     if (audio['_id'] == selectedAudios[i]) {
-                      //       print("list has same value");
-                      //     } else {
-                      //       print("done");
-                      //       selectedAudios.add(audio['_id']);
-                      //     }
-                      //   }
-
-                      //   // selectedAudios.clear();
-                      //   // selectedAudios.add(audio['_id']);
-                      // } else {
-                      //   // selectedAudios.add(audio['_id']);
-                      // }
-                      // // selectedAudios.add(audio['_id']);
-                      // print(selectedAudios);
                     },
                     child: RecordNum(
                       RecName: audioName,
