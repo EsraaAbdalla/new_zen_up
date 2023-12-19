@@ -62,10 +62,11 @@ class _AudioPlayerAppState extends State<AudioPlayerApp> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.1,
                 ),
                 const Text(
-                  'Night Island',
+                  'Your ZenUp Meditation',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 34,
                     fontWeight: FontWeight.w700,

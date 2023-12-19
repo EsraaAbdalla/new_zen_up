@@ -119,24 +119,24 @@ class _HomePageState extends State<HomePage> {
           height: MediaQuery.of(context).size.height * 0.01,
         ),
         Expanded(
+            flex: 3,
             child: AudioListPage(
-          RecName: widget.CatName.toLowerCase(),
-          color1: widget.color1,
-          color2: widget.color2,
-          CatName: widget.CatName,
-        )),
-        const SizedBox(
-          height: 15,
-        ),
+              RecName: widget.CatName.toLowerCase(),
+              color1: widget.color1,
+              color2: widget.color2,
+              CatName: widget.CatName,
+            )),
         HomeSkip(
           color: widget.color2,
           catChar: widget.CatChar,
           CatName: widget.CatName,
         ),
-        const SizedBox(
-            height: 30), // Add spacing between HomeSkip and CatCircle
+        SizedBox(
+            height: MediaQuery.of(context).size.height *
+                0.01), // Add spacing between HomeSkip and CatCircle
         Container(
-          height: 100, // Set a specific height for the CatCircle widget
+          height: MediaQuery.of(context).size.height *
+              0.1, // Set a specific height for the CatCircle widget
           child: CatCircle(CatName: widget.CatName),
         ),
         // SizedBox(
@@ -166,7 +166,8 @@ class _HomeSkipState extends State<HomeSkip> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.04),
       child: Row(
         children: [
           GestureDetector(
@@ -211,9 +212,8 @@ class _HomeSkipState extends State<HomeSkip> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 30.0,
-            ),
+            padding:
+                EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.07),
             child: GestureDetector(
               onTap: () {
                 if (widget.catChar == 'A' && widget.CatName == 'Awareness') {
@@ -351,8 +351,8 @@ class _HomeSkipState extends State<HomeSkip> {
                   children: [
                     Center(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 30,
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.07,
                         ),
                         child: Text(
                           'Skip ${widget.catChar}',

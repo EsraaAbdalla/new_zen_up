@@ -20,7 +20,7 @@ class _CatCircleState extends State<CatCircle> {
     const Color(0xFFF0DCA91), // Default color for B
     const Color(0xFFFFFD541), // Default color for C
     const Color(0xFFFFB6F20), // Default color for F
-    const Color(0xFFF441DFC), // Default color for G
+    const Color(0xFFF441DFC), // ault color for G
     const Color(0xFFF9D86FF), // Default color for H
   ];
 
@@ -95,6 +95,27 @@ class _CatCircleState extends State<CatCircle> {
 
   int selectedCircleIndex = -1;
 
+  Map<String, Color> defaultColors = {
+    'default': const Color.fromARGB(255, 221, 219, 219),
+  };
+
+  Map<String, Color> specialColors = {
+    'Awareness': const Color(0xFFFFF3F3F),
+    'Breathing': const Color(0xFFF0DCA91),
+    'Compassion': const Color(0xFFFFFD541),
+    'Forgiveness': const Color(0xFFFFB6F20),
+    'Gratitude': const Color(0xFFF441DFC),
+    'Happiness': const Color(0xFFF9D86FF),
+  };
+  Map<String, Color> specialColors2 = {
+    'Awareness': Colors.white,
+    'Breathing': const Color(0xFFF0DCA91),
+    'Compassion': const Color(0xFFFFFD541),
+    'Forgiveness': const Color(0xFFFFB6F20),
+    'Gratitude': const Color(0xFFF441DFC),
+    'Happiness': const Color(0xFFF9D86FF),
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +126,8 @@ class _CatCircleState extends State<CatCircle> {
           children: circles.asMap().entries.map((entry) {
             final index = entry.key;
             final circle = entry.value;
-            bool isSelected = false;
+            bool isSelected =
+                widget.CatName == (circle.page as HomePage).CatName;
 
             if (widget.CatName == 'Awareness' && index == 0) {
               isSelected = true;
@@ -141,6 +163,9 @@ class _CatCircleState extends State<CatCircle> {
             return GestureDetector(
               onTap: isClickable
                   ? () {
+                      setState(() {
+                        selectedCircleIndex = index;
+                      });
                       // Add your onTap logic here
                       if (index == 0) {
                         Navigator.push(
@@ -221,37 +246,24 @@ class _CatCircleState extends State<CatCircle> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: isSelected
-                      ? (index == 0 && widget.CatName == 'Awareness')
-                          ? circleColors[0] // Special color for Awareness A
-                          : (index == 1 && widget.CatName == 'Breathing')
-                              ? circleColors[1] // Special color for Breathing B
-                              : (index == 2 && widget.CatName == 'Compassion')
-                                  ? circleColors[2]
-                                  : (index == 3 &&
-                                          widget.CatName == 'Forgiveness')
-                                      ? circleColors[3]
-                                      : (index == 4 &&
-                                              widget.CatName == 'Gratitude')
-                                          ? circleColors[4]
-                                          : (index == 5 &&
-                                                  widget.CatName == 'Happiness')
-                                              ? circleColors[
-                                                  5] // Special color for Compassion C
-                                              : Colors
-                                                  .green // Default color for other selected circles
-                      : const Color.fromARGB(255, 221, 219, 219),
+                      ? specialColors[(circle.page as HomePage).CatName] ??
+                          defaultColors['default']
+                      : defaultColors['default'],
                   border: Border.all(
-                    color: isSelected ? Colors.white : const Color(0xFFF166FFF),
+                    color: isSelected
+                        ? Colors.white
+                        : const Color(
+                            0xFFF166FFF), // Color(0xFFF166FFF) for characters after the selected one
                     width: isSelected ? 2.0 : 0.0,
                   ),
                 ),
-                width: 50,
-                height: 50,
+                width: MediaQuery.of(context).size.width * 0.12,
+                height: MediaQuery.of(context).size.height * 0.12,
                 child: Center(
                   child: Text(
                     circle.character,
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: MediaQuery.of(context).size.width * 0.08,
                       color: isSelected ? Colors.white : Colors.black,
                       fontWeight: FontWeight.w600,
                     ),

@@ -99,7 +99,7 @@ class _RandomAudioState extends State<RandomAudio> {
               child: Row(
                 children: const [
                   Text(
-                    'Enter number from 1-30 min ',
+                    'Enter number from 6-30 min ',
                     style: TextStyle(
                       color: Color(0XFFFADA4A5),
                       fontSize: 14,

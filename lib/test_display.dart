@@ -106,8 +106,10 @@ class _AudioListPageState extends State<AudioListPage> {
                 final isSelected = selectedAudioIndex == index;
 
                 return Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 10, left: 20, right: 20),
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.height * 0.01,
+                      left: MediaQuery.of(context).size.width * 0.05,
+                      right: MediaQuery.of(context).size.width * 0.05),
                   child: InkWell(
                     onTap: () {
                       setState(() {

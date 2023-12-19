@@ -32,8 +32,12 @@ class _RecordNumState extends State<RecordNum> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
       width: MediaQuery.of(context).size.width * 0.9,
+      height: screenWidth > 750 ? screenHeight * 0.1 : screenWidth * 0.15,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: widget.color1.withOpacity(0.2),
@@ -48,8 +52,11 @@ class _RecordNumState extends State<RecordNum> {
               right: 20,
             ),
             child: Container(
-              width: 51,
-              height: 51,
+              width:
+                  screenWidth > 600 ? screenHeight * 0.2 : screenWidth * 0.25,
+              height: screenHeight > 600
+                  ? screenHeight * 0.41
+                  : screenHeight * 0.29,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: widget.color2.withOpacity(0.3),
@@ -57,21 +64,29 @@ class _RecordNumState extends State<RecordNum> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Column(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         widget.number,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Color(0xFFF166FFF),
                           fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                          fontSize: screenWidth > 600
+                              ? screenHeight * 0.03
+                              : screenWidth * 0.04,
                         ),
                       ),
-                      const Text(
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.01,
+                      ),
+                      Text(
                         'min',
                         style: TextStyle(
                           color: Color(0xFFF166FFF),
-                          fontSize: 14,
+                          fontSize: screenWidth > 600
+                              ? screenHeight * 0.05
+                              : screenWidth * 0.04,
                         ),
                       ),
                     ],
@@ -86,9 +101,9 @@ class _RecordNumState extends State<RecordNum> {
                   maxWidth: MediaQuery.of(context).size.width * 0.6),
               child: Text(
                 widget.RecName,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Color(0xFFF166FFF),
-                  fontSize: 16,
+                  fontSize: screenWidth * 0.04,
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 2,
@@ -132,3 +147,110 @@ class _RecordNumState extends State<RecordNum> {
     );
   }
 }
+
+
+
+
+
+
+// class _RecordNumState extends State<RecordNum> {
+//   AudioPlayer audioPlayer = AudioPlayer();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     double screenWidth = MediaQuery.of(context).size.width;
+//     double screenHeight = MediaQuery.of(context).size.height;
+
+//     return Container(
+//       width: screenWidth * 0.9,
+//       height: screenWidth > 750 ? screenWidth * 0.13 : screenWidth * 0.15,
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(15),
+//         color: widget.color1.withOpacity(0.2),
+//       ),
+//       child: Row(
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.all(10),
+//             child: Container(
+//               width: screenWidth > 600 ? screenWidth * 0.4 : screenWidth * 0.25,
+//               height: screenHeight > 600 ? screenHeight * 0.4 : screenHeight * 0.29,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(10),
+//                 color: widget.color2.withOpacity(0.3),
+//               ),
+//               child: Center(
+//                 child: Padding(
+//                   padding: const EdgeInsets.all(4.0),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Text(
+//                         widget.number,
+//                         style: TextStyle(
+//                           color: Color(0xFFF166FFF),
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: screenWidth * 0.05,
+//                         ),
+//                       ),
+//                       SizedBox(width: screenWidth * 0.01),
+//                       Text(
+//                         'min',
+//                         style: TextStyle(
+//                           color: Color(0xFFF166FFF),
+//                           fontSize: screenWidth * 0.05,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ),
+//           Expanded(
+//             child: Container(
+//               constraints: BoxConstraints(
+//                   maxWidth: screenWidth > 600 ? screenWidth * 0.6 : double.infinity),
+//               child: Text(
+//                 widget.RecName,
+//                 style: TextStyle(
+//                   color: Color(0xFFF166FFF),
+//                   fontSize: screenWidth * 0.04,
+//                   fontWeight: FontWeight.bold,
+//                 ),
+//                 maxLines: 2,
+//                 softWrap: true,
+//               ),
+//             ),
+//           ),
+//           IconButton(
+//             onPressed: widget.onTapFunction,
+//             icon: widget.icon,
+//           ),
+//           IconButton(
+//             onPressed: () {
+//               showDialog(
+//                 context: context,
+//                 builder: (context) => AlertDialog(
+//                   title: const Text('Audio Description'),
+//                   content: Text(widget.Des),
+//                   actions: [
+//                     TextButton(
+//                       child: const Text('OK'),
+//                       onPressed: () => Navigator.pop(context),
+//                     ),
+//                   ],
+//                 ),
+//               );
+//             },
+//             icon: const Icon(
+//               Icons.info_outline,
+//               color: Colors.white,
+//               size: 25,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
